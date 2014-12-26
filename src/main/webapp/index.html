@@ -32,7 +32,7 @@
 		</nav>
 		<div class="starter-template">
 			<div class="row">
-				<form name="sparql" class="form-group">
+				<form name="queryForm" class="form-group">
 					<div class="form-group">
 						<textarea name="query" class="form-control" rows="18" cols="80">
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -43,12 +43,12 @@ PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOn
 							</textarea>
 					</div>
 
-					<button class="btn btn-primary pull-right" onclick="excuteQuery()"
+					<button id="queryButton" class="btn btn-primary pull-right" onclick="excuteQuery()"
 						type="button">Query</button>
 					<div class="clearfix"></div>
 				</form>
 
-				<div data-bind="with: queryResult">
+				<div id="QueryResultPanel" data-bind="with: queryResult">
 					<table class="table table-hover">
 						<thead>
 							<tr data-bind="foreach: head.vars">
@@ -72,17 +72,32 @@ PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOn
 	var MyModel = {
 		queryResult : ko.observable()
 	};
-
+	
+	
 	function excuteQuery() {
-		var query = sparql.query.value;
+		$('#QueryResultPanel').fadeOut('fast', function() {
+			var query = queryForm.query.value;
+			$("#queryButton").prop('disabled', true);
 
-		$.post('sparql', {
-			'query' : query
-		}).success(function(response) {
-			MyModel.queryResult(response);
-		}).fail(function(){
-			MyModel.queryResult(undefined);
-		});
+			$.post('sparql', {
+				'query' : query
+			}).success(function(response) {
+				MyModel.queryResult(response);
+
+				$('#QueryResultPanel').fadeIn('fast', function() {
+
+					$('html, body').animate({
+						scrollTop : $("#QueryResultPanel").offset().top
+					}, 1000);
+
+					$("#queryButton").prop('disabled', false);
+				});
+
+			}).fail(function() {
+				MyModel.queryResult(undefined);
+				$("#queryButton").prop('disabled', false);
+			});
+		})
 	}
 
 	ko.applyBindings(MyModel);
