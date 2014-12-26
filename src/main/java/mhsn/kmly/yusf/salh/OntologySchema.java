@@ -16,6 +16,7 @@ public class OntologySchema {
 	private HashMap<String, DatatypeProperty> dataProperties;
 	private HashMap<String, Individual> individuals;
 	
+	
 	OntologySchema(){
 		ontModel = null;
 		classes = null;

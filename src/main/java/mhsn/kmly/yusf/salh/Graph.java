@@ -14,6 +14,7 @@ public class Graph {
 	private List<Integer> head, next, to;
 	private int nodesNumber, edgesNumber;
 	
+	
 	Graph(){
 		nodesIndicesMap = new HashMap<String, Integer>();
 		nodes = new ArrayList<GraphNode>();
