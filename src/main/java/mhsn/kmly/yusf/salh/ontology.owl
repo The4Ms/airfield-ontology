@@ -1,0 +1,675 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY AirportOntology "http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#" >
+]>
+
+
+<rdf:RDF xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://www.w3.org/2002/07/owl"
+     xmlns:AirportOntology="http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <Ontology rdf:about="http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#CompatibleWith -->
+
+    <ObjectProperty rdf:about="&AirportOntology;CompatibleWith">
+        <rdfs:range rdf:resource="&AirportOntology;Aircraft"/>
+        <rdfs:domain rdf:resource="&AirportOntology;Gate"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#ConsistOf -->
+
+    <ObjectProperty rdf:about="&AirportOntology;ConsistOf">
+        <rdfs:domain rdf:resource="&AirportOntology;Airfield"/>
+        <rdfs:range rdf:resource="&AirportOntology;Gate"/>
+        <rdfs:range rdf:resource="&AirportOntology;GroundSurface"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#Contain -->
+
+    <ObjectProperty rdf:about="&AirportOntology;Contain">
+        <rdfs:range rdf:resource="&AirportOntology;Airfield"/>
+        <rdfs:domain rdf:resource="&AirportOntology;Airport"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#HasEntranceTo -->
+
+    <ObjectProperty rdf:about="&AirportOntology;HasEntranceTo">
+        <inverseOf rdf:resource="&AirportOntology;HasExitTo"/>
+        <rdfs:range rdf:resource="&AirportOntology;Runway"/>
+        <rdfs:domain rdf:resource="&AirportOntology;Taxiway"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#HasExitTo -->
+
+    <ObjectProperty rdf:about="&AirportOntology;HasExitTo">
+        <rdfs:domain rdf:resource="&AirportOntology;Runway"/>
+        <rdfs:range rdf:resource="&AirportOntology;Taxiway"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#IsLocatedIn -->
+
+    <ObjectProperty rdf:about="&AirportOntology;IsLocatedIn">
+        <rdfs:domain rdf:resource="&AirportOntology;Aircraft"/>
+        <rdfs:range rdf:resource="&AirportOntology;GroundSurface"/>
+        <inverseOf rdf:resource="&AirportOntology;LocationOf"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#IsPartOf -->
+
+    <ObjectProperty rdf:about="&AirportOntology;IsPartOf">
+        <rdfs:range rdf:resource="&AirportOntology;Airfield"/>
+        <inverseOf rdf:resource="&AirportOntology;ConsistOf"/>
+        <rdfs:domain rdf:resource="&AirportOntology;Gate"/>
+        <rdfs:domain rdf:resource="&AirportOntology;GroundSurface"/>
+    </ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#LocationOf -->
+
+    <ObjectProperty rdf:about="&AirportOntology;LocationOf">
+        <rdfs:range rdf:resource="&AirportOntology;Aircraft"/>
+        <rdfs:domain rdf:resource="&AirportOntology;GroundSurface"/>
+    </ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#AircraftClass -->
+
+    <DatatypeProperty rdf:about="&AirportOntology;AircraftClass">
+        <rdfs:domain rdf:resource="&AirportOntology;Aircraft"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#AircraftType -->
+
+    <DatatypeProperty rdf:about="&AirportOntology;AircraftType">
+        <rdfs:domain rdf:resource="&AirportOntology;Aircraft"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#CompatibleAircraftType -->
+
+    <DatatypeProperty rdf:about="&AirportOntology;CompatibleAircraftType">
+        <rdfs:domain rdf:resource="&AirportOntology;Gate"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#Elevation -->
+
+    <DatatypeProperty rdf:about="&AirportOntology;Elevation">
+        <rdfs:domain rdf:resource="&AirportOntology;Airfield"/>
+        <rdfs:range rdf:resource="&xsd;integer"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#EngineCount -->
+
+    <DatatypeProperty rdf:about="&AirportOntology;EngineCount">
+        <rdfs:domain rdf:resource="&AirportOntology;Aircraft"/>
+        <rdfs:range rdf:resource="&xsd;integer"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#GroundType -->
+
+    <DatatypeProperty rdf:about="&AirportOntology;GroundType">
+        <rdfs:domain rdf:resource="&AirportOntology;Runway"/>
+        <rdfs:range>
+            <rdfs:Datatype>
+                <oneOf>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="&rdf;List"/>
+                        <rdf:first>asphalt</rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="&rdf;List"/>
+                                <rdf:first>grass</rdf:first>
+                                <rdf:rest rdf:resource="&rdf;nil"/>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </oneOf>
+            </rdfs:Datatype>
+        </rdfs:range>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#ID -->
+
+    <DatatypeProperty rdf:about="&AirportOntology;ID">
+        <rdfs:domain rdf:resource="&AirportOntology;Aircraft"/>
+        <rdfs:domain rdf:resource="&AirportOntology;Airfield"/>
+        <rdfs:domain rdf:resource="&AirportOntology;Gate"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#Length -->
+
+    <DatatypeProperty rdf:about="&AirportOntology;Length">
+        <rdfs:domain rdf:resource="&AirportOntology;Runway"/>
+        <rdfs:range rdf:resource="&xsd;integer"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#MaintenanceStatus -->
+
+    <DatatypeProperty rdf:about="&AirportOntology;MaintenanceStatus">
+        <rdfs:domain rdf:resource="&AirportOntology;Taxiway"/>
+        <rdfs:range>
+            <rdfs:Datatype>
+                <oneOf>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="&rdf;List"/>
+                        <rdf:first>locked</rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="&rdf;List"/>
+                                <rdf:first>open</rdf:first>
+                                <rdf:rest rdf:resource="&rdf;nil"/>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </oneOf>
+            </rdfs:Datatype>
+        </rdfs:range>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#Manufacturer -->
+
+    <DatatypeProperty rdf:about="&AirportOntology;Manufacturer">
+        <rdfs:domain rdf:resource="&AirportOntology;Aircraft"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#MaximumSpeed -->
+
+    <DatatypeProperty rdf:about="&AirportOntology;MaximumSpeed">
+        <rdfs:domain rdf:resource="&AirportOntology;Aircraft"/>
+        <rdfs:range rdf:resource="&xsd;integer"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#Name -->
+
+    <DatatypeProperty rdf:about="&AirportOntology;Name">
+        <rdfs:domain rdf:resource="&AirportOntology;Airport"/>
+        <rdfs:domain rdf:resource="&AirportOntology;GroundSurface"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#PassengerCapacity -->
+
+    <DatatypeProperty rdf:about="&AirportOntology;PassengerCapacity">
+        <rdfs:domain rdf:resource="&AirportOntology;Aircraft"/>
+        <rdfs:domain rdf:resource="&AirportOntology;Gate"/>
+        <rdfs:range rdf:resource="&xsd;integer"/>
+    </DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#UsageType -->
+
+    <DatatypeProperty rdf:about="&AirportOntology;UsageType">
+        <rdfs:domain rdf:resource="&AirportOntology;Airfield"/>
+        <rdfs:range>
+            <rdfs:Datatype>
+                <oneOf>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="&rdf;List"/>
+                        <rdf:first>charter</rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="&rdf;List"/>
+                                <rdf:first>civilian</rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="&rdf;List"/>
+                                        <rdf:first>military</rdf:first>
+                                        <rdf:rest rdf:resource="&rdf;nil"/>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </oneOf>
+            </rdfs:Datatype>
+        </rdfs:range>
+    </DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#Aircraft -->
+
+    <Class rdf:about="&AirportOntology;Aircraft"/>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#Airfield -->
+
+    <Class rdf:about="&AirportOntology;Airfield"/>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#Airport -->
+
+    <Class rdf:about="&AirportOntology;Airport"/>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#Gate -->
+
+    <Class rdf:about="&AirportOntology;Gate">
+        <disjointWith rdf:resource="&AirportOntology;GroundSurface"/>
+    </Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#GroundSurface -->
+
+    <Class rdf:about="&AirportOntology;GroundSurface"/>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#Runway -->
+
+    <Class rdf:about="&AirportOntology;Runway">
+        <rdfs:subClassOf rdf:resource="&AirportOntology;GroundSurface"/>
+        <disjointWith rdf:resource="&AirportOntology;Taxiway"/>
+    </Class>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#Taxiway -->
+
+    <Class rdf:about="&AirportOntology;Taxiway">
+        <rdfs:subClassOf rdf:resource="&AirportOntology;GroundSurface"/>
+    </Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#AirBus_KMN20 -->
+
+    <NamedIndividual rdf:about="&AirportOntology;AirBus_KMN20">
+        <rdf:type rdf:resource="&AirportOntology;Aircraft"/>
+        <AirportOntology:MaximumSpeed rdf:datatype="&xsd;integer">1000</AirportOntology:MaximumSpeed>
+        <AirportOntology:PassengerCapacity rdf:datatype="&xsd;integer">300</AirportOntology:PassengerCapacity>
+        <AirportOntology:EngineCount rdf:datatype="&xsd;integer">4</AirportOntology:EngineCount>
+        <AirportOntology:AircraftType rdf:datatype="&xsd;string">A380</AirportOntology:AircraftType>
+        <AirportOntology:Manufacturer rdf:datatype="&xsd;string">AirBus</AirportOntology:Manufacturer>
+        <AirportOntology:ID rdf:datatype="&xsd;string">KMN20</AirportOntology:ID>
+        <AirportOntology:AircraftClass rdf:datatype="&xsd;string">WideBody</AirportOntology:AircraftClass>
+        <AirportOntology:IsLocatedIn rdf:resource="&AirportOntology;Almaza_05C"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#AirBus_SKU10 -->
+
+    <NamedIndividual rdf:about="&AirportOntology;AirBus_SKU10">
+        <rdf:type rdf:resource="&AirportOntology;Aircraft"/>
+        <AirportOntology:PassengerCapacity rdf:datatype="&xsd;integer">200</AirportOntology:PassengerCapacity>
+        <AirportOntology:EngineCount rdf:datatype="&xsd;integer">4</AirportOntology:EngineCount>
+        <AirportOntology:MaximumSpeed rdf:datatype="&xsd;integer">900</AirportOntology:MaximumSpeed>
+        <AirportOntology:AircraftType rdf:datatype="&xsd;string">A330</AirportOntology:AircraftType>
+        <AirportOntology:Manufacturer rdf:datatype="&xsd;string">AirBus</AirportOntology:Manufacturer>
+        <AirportOntology:ID rdf:datatype="&xsd;string">SKU10</AirportOntology:ID>
+        <AirportOntology:AircraftClass rdf:datatype="&xsd;string">WideBody</AirportOntology:AircraftClass>
+        <AirportOntology:IsLocatedIn rdf:resource="&AirportOntology;Almaza_05C"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#AlmazaAirport -->
+
+    <NamedIndividual rdf:about="&AirportOntology;AlmazaAirport">
+        <rdf:type rdf:resource="&AirportOntology;Airport"/>
+        <AirportOntology:Name rdf:datatype="&xsd;string">Almaza Airport</AirportOntology:Name>
+        <AirportOntology:Contain rdf:resource="&AirportOntology;Almaza_HELA"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#Almaza_05C -->
+
+    <NamedIndividual rdf:about="&AirportOntology;Almaza_05C">
+        <rdf:type rdf:resource="&AirportOntology;Runway"/>
+        <AirportOntology:Name rdf:datatype="&xsd;string">05C</AirportOntology:Name>
+        <AirportOntology:Length rdf:datatype="&xsd;integer">1200</AirportOntology:Length>
+        <AirportOntology:GroundType rdf:datatype="&xsd;string">grass</AirportOntology:GroundType>
+        <AirportOntology:LocationOf rdf:resource="&AirportOntology;AirBus_KMN20"/>
+        <AirportOntology:LocationOf rdf:resource="&AirportOntology;AirBus_SKU10"/>
+        <AirportOntology:IsPartOf rdf:resource="&AirportOntology;Almaza_HELA"/>
+        <AirportOntology:HasExitTo rdf:resource="&AirportOntology;Almaza_M"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#Almaza_14D -->
+
+    <NamedIndividual rdf:about="&AirportOntology;Almaza_14D">
+        <rdf:type rdf:resource="&AirportOntology;Runway"/>
+        <AirportOntology:Name rdf:datatype="&xsd;string">14D</AirportOntology:Name>
+        <AirportOntology:Length rdf:datatype="&xsd;integer">1500</AirportOntology:Length>
+        <AirportOntology:GroundType rdf:datatype="&xsd;string">asphalt</AirportOntology:GroundType>
+        <AirportOntology:HasExitTo rdf:resource="&AirportOntology;Almaza_A"/>
+        <AirportOntology:IsPartOf rdf:resource="&AirportOntology;Almaza_HELA"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#Almaza_A -->
+
+    <NamedIndividual rdf:about="&AirportOntology;Almaza_A">
+        <rdf:type rdf:resource="&AirportOntology;Taxiway"/>
+        <AirportOntology:Name rdf:datatype="&xsd;string">A</AirportOntology:Name>
+        <AirportOntology:MaintenanceStatus rdf:datatype="&xsd;string">open</AirportOntology:MaintenanceStatus>
+        <AirportOntology:HasEntranceTo rdf:resource="&AirportOntology;Almaza_14D"/>
+        <AirportOntology:IsPartOf rdf:resource="&AirportOntology;Almaza_HELA"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#Almaza_A1 -->
+
+    <NamedIndividual rdf:about="&AirportOntology;Almaza_A1">
+        <rdf:type rdf:resource="&AirportOntology;Gate"/>
+        <AirportOntology:PassengerCapacity rdf:datatype="&xsd;integer">350</AirportOntology:PassengerCapacity>
+        <AirportOntology:ID rdf:datatype="&xsd;string">A1</AirportOntology:ID>
+        <AirportOntology:CompatibleAircraftType rdf:datatype="&xsd;string">A320</AirportOntology:CompatibleAircraftType>
+        <AirportOntology:CompatibleAircraftType rdf:datatype="&xsd;string">A330</AirportOntology:CompatibleAircraftType>
+        <AirportOntology:CompatibleAircraftType rdf:datatype="&xsd;string">A380</AirportOntology:CompatibleAircraftType>
+        <AirportOntology:CompatibleWith rdf:resource="&AirportOntology;AirBus_KMN20"/>
+        <AirportOntology:CompatibleWith rdf:resource="&AirportOntology;AirBus_SKU10"/>
+        <AirportOntology:IsPartOf rdf:resource="&AirportOntology;Almaza_HELA"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#Almaza_A2 -->
+
+    <NamedIndividual rdf:about="&AirportOntology;Almaza_A2">
+        <rdf:type rdf:resource="&AirportOntology;Gate"/>
+        <AirportOntology:PassengerCapacity rdf:datatype="&xsd;integer">300</AirportOntology:PassengerCapacity>
+        <AirportOntology:ID rdf:datatype="&xsd;string">A2</AirportOntology:ID>
+        <AirportOntology:CompatibleAircraftType rdf:datatype="&xsd;string">A330</AirportOntology:CompatibleAircraftType>
+        <AirportOntology:CompatibleAircraftType rdf:datatype="&xsd;string">A380</AirportOntology:CompatibleAircraftType>
+        <AirportOntology:CompatibleWith rdf:resource="&AirportOntology;AirBus_KMN20"/>
+        <AirportOntology:CompatibleWith rdf:resource="&AirportOntology;AirBus_SKU10"/>
+        <AirportOntology:IsPartOf rdf:resource="&AirportOntology;Almaza_HELA"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#Almaza_HELA -->
+
+    <NamedIndividual rdf:about="&AirportOntology;Almaza_HELA">
+        <rdf:type rdf:resource="&AirportOntology;Airfield"/>
+        <AirportOntology:Elevation rdf:datatype="&xsd;integer">200</AirportOntology:Elevation>
+        <AirportOntology:ID rdf:datatype="&xsd;string">HELA</AirportOntology:ID>
+        <AirportOntology:UsageType rdf:datatype="&xsd;string">military</AirportOntology:UsageType>
+        <AirportOntology:ConsistOf rdf:resource="&AirportOntology;Almaza_05C"/>
+        <AirportOntology:ConsistOf rdf:resource="&AirportOntology;Almaza_14D"/>
+        <AirportOntology:ConsistOf rdf:resource="&AirportOntology;Almaza_A"/>
+        <AirportOntology:ConsistOf rdf:resource="&AirportOntology;Almaza_A1"/>
+        <AirportOntology:ConsistOf rdf:resource="&AirportOntology;Almaza_A2"/>
+        <AirportOntology:ConsistOf rdf:resource="&AirportOntology;Almaza_M"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#Almaza_M -->
+
+    <NamedIndividual rdf:about="&AirportOntology;Almaza_M">
+        <rdf:type rdf:resource="&AirportOntology;Taxiway"/>
+        <AirportOntology:Name rdf:datatype="&xsd;string">M</AirportOntology:Name>
+        <AirportOntology:MaintenanceStatus rdf:datatype="&xsd;string">locked</AirportOntology:MaintenanceStatus>
+        <AirportOntology:HasEntranceTo rdf:resource="&AirportOntology;Almaza_05C"/>
+        <AirportOntology:IsPartOf rdf:resource="&AirportOntology;Almaza_HELA"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#Boeing_STU30 -->
+
+    <NamedIndividual rdf:about="&AirportOntology;Boeing_STU30">
+        <rdf:type rdf:resource="&AirportOntology;Aircraft"/>
+        <AirportOntology:PassengerCapacity rdf:datatype="&xsd;integer">150</AirportOntology:PassengerCapacity>
+        <AirportOntology:EngineCount rdf:datatype="&xsd;integer">2</AirportOntology:EngineCount>
+        <AirportOntology:MaximumSpeed rdf:datatype="&xsd;integer">800</AirportOntology:MaximumSpeed>
+        <AirportOntology:Manufacturer rdf:datatype="&xsd;string">Boeing</AirportOntology:Manufacturer>
+        <AirportOntology:AircraftType rdf:datatype="&xsd;string">Boeing737</AirportOntology:AircraftType>
+        <AirportOntology:AircraftClass rdf:datatype="&xsd;string">NarrowBody</AirportOntology:AircraftClass>
+        <AirportOntology:ID rdf:datatype="&xsd;string">STU30</AirportOntology:ID>
+        <AirportOntology:IsLocatedIn rdf:resource="&AirportOntology;Cairo_06D"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#Boeing_UWD20 -->
+
+    <NamedIndividual rdf:about="&AirportOntology;Boeing_UWD20">
+        <rdf:type rdf:resource="&AirportOntology;Aircraft"/>
+        <AirportOntology:PassengerCapacity rdf:datatype="&xsd;integer">100</AirportOntology:PassengerCapacity>
+        <AirportOntology:MaximumSpeed rdf:datatype="&xsd;integer">1000</AirportOntology:MaximumSpeed>
+        <AirportOntology:EngineCount rdf:datatype="&xsd;integer">2</AirportOntology:EngineCount>
+        <AirportOntology:Manufacturer rdf:datatype="&xsd;string">Boeing</AirportOntology:Manufacturer>
+        <AirportOntology:AircraftType rdf:datatype="&xsd;string">Boeing787</AirportOntology:AircraftType>
+        <AirportOntology:AircraftClass rdf:datatype="&xsd;string">NarrowBody</AirportOntology:AircraftClass>
+        <AirportOntology:ID rdf:datatype="&xsd;string">UWD20</AirportOntology:ID>
+        <AirportOntology:IsLocatedIn rdf:resource="&AirportOntology;Cairo_K"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#CairoInternationalAirport -->
+
+    <NamedIndividual rdf:about="&AirportOntology;CairoInternationalAirport">
+        <rdf:type rdf:resource="&AirportOntology;Airport"/>
+        <AirportOntology:Name rdf:datatype="&xsd;string">Cairo International Airport</AirportOntology:Name>
+        <AirportOntology:Contain rdf:resource="&AirportOntology;Cairo_CAI"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#Cairo_02E -->
+
+    <NamedIndividual rdf:about="&AirportOntology;Cairo_02E">
+        <rdf:type rdf:resource="&AirportOntology;Runway"/>
+        <AirportOntology:Name rdf:datatype="&xsd;string">02E</AirportOntology:Name>
+        <AirportOntology:Length rdf:datatype="&xsd;integer">2000</AirportOntology:Length>
+        <AirportOntology:GroundType rdf:datatype="&xsd;string">asphalt</AirportOntology:GroundType>
+        <AirportOntology:IsPartOf rdf:resource="&AirportOntology;Cairo_CAI"/>
+        <AirportOntology:HasExitTo rdf:resource="&AirportOntology;Cairo_K"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#Cairo_06D -->
+
+    <NamedIndividual rdf:about="&AirportOntology;Cairo_06D">
+        <rdf:type rdf:resource="&AirportOntology;Runway"/>
+        <AirportOntology:Name rdf:datatype="&xsd;string">06D</AirportOntology:Name>
+        <AirportOntology:Length rdf:datatype="&xsd;integer">1200</AirportOntology:Length>
+        <AirportOntology:GroundType rdf:datatype="&xsd;string">asphalt</AirportOntology:GroundType>
+        <AirportOntology:LocationOf rdf:resource="&AirportOntology;Boeing_STU30"/>
+        <AirportOntology:HasExitTo rdf:resource="&AirportOntology;Cairo_B"/>
+        <AirportOntology:IsPartOf rdf:resource="&AirportOntology;Cairo_CAI"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#Cairo_B -->
+
+    <NamedIndividual rdf:about="&AirportOntology;Cairo_B">
+        <rdf:type rdf:resource="&AirportOntology;Taxiway"/>
+        <AirportOntology:Name rdf:datatype="&xsd;string">B</AirportOntology:Name>
+        <AirportOntology:MaintenanceStatus rdf:datatype="&xsd;string">locked</AirportOntology:MaintenanceStatus>
+        <AirportOntology:HasEntranceTo rdf:resource="&AirportOntology;Cairo_06D"/>
+        <AirportOntology:IsPartOf rdf:resource="&AirportOntology;Cairo_CAI"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#Cairo_B1 -->
+
+    <NamedIndividual rdf:about="&AirportOntology;Cairo_B1">
+        <rdf:type rdf:resource="&AirportOntology;Gate"/>
+        <AirportOntology:PassengerCapacity rdf:datatype="&xsd;integer">150</AirportOntology:PassengerCapacity>
+        <AirportOntology:ID rdf:datatype="&xsd;string">B1</AirportOntology:ID>
+        <AirportOntology:CompatibleAircraftType rdf:datatype="&xsd;string">Boeing737</AirportOntology:CompatibleAircraftType>
+        <AirportOntology:CompatibleAircraftType rdf:datatype="&xsd;string">Boeing767</AirportOntology:CompatibleAircraftType>
+        <AirportOntology:CompatibleAircraftType rdf:datatype="&xsd;string">Boeing787</AirportOntology:CompatibleAircraftType>
+        <AirportOntology:CompatibleWith rdf:resource="&AirportOntology;Boeing_STU30"/>
+        <AirportOntology:CompatibleWith rdf:resource="&AirportOntology;Boeing_UWD20"/>
+        <AirportOntology:IsPartOf rdf:resource="&AirportOntology;Cairo_CAI"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#Cairo_B2 -->
+
+    <NamedIndividual rdf:about="&AirportOntology;Cairo_B2">
+        <rdf:type rdf:resource="&AirportOntology;Gate"/>
+        <AirportOntology:PassengerCapacity rdf:datatype="&xsd;integer">300</AirportOntology:PassengerCapacity>
+        <AirportOntology:CompatibleAircraftType rdf:datatype="&xsd;string">A320</AirportOntology:CompatibleAircraftType>
+        <AirportOntology:ID rdf:datatype="&xsd;string">B2</AirportOntology:ID>
+        <AirportOntology:IsPartOf rdf:resource="&AirportOntology;Cairo_CAI"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#Cairo_C1 -->
+
+    <NamedIndividual rdf:about="&AirportOntology;Cairo_C1">
+        <rdf:type rdf:resource="&AirportOntology;Gate"/>
+        <AirportOntology:PassengerCapacity rdf:datatype="&xsd;integer">100</AirportOntology:PassengerCapacity>
+        <AirportOntology:CompatibleAircraftType rdf:datatype="&xsd;string">Boeing787</AirportOntology:CompatibleAircraftType>
+        <AirportOntology:ID rdf:datatype="&xsd;string">C1</AirportOntology:ID>
+        <AirportOntology:CompatibleWith rdf:resource="&AirportOntology;Boeing_UWD20"/>
+        <AirportOntology:IsPartOf rdf:resource="&AirportOntology;Cairo_CAI"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#Cairo_CAI -->
+
+    <NamedIndividual rdf:about="&AirportOntology;Cairo_CAI">
+        <rdf:type rdf:resource="&AirportOntology;Airfield"/>
+        <AirportOntology:Elevation rdf:datatype="&xsd;integer">300</AirportOntology:Elevation>
+        <AirportOntology:ID rdf:datatype="&xsd;string">CAI</AirportOntology:ID>
+        <AirportOntology:UsageType rdf:datatype="&xsd;string">civilian</AirportOntology:UsageType>
+        <AirportOntology:ConsistOf rdf:resource="&AirportOntology;Cairo_02E"/>
+        <AirportOntology:ConsistOf rdf:resource="&AirportOntology;Cairo_06D"/>
+        <AirportOntology:ConsistOf rdf:resource="&AirportOntology;Cairo_B"/>
+        <AirportOntology:ConsistOf rdf:resource="&AirportOntology;Cairo_B1"/>
+        <AirportOntology:ConsistOf rdf:resource="&AirportOntology;Cairo_B2"/>
+        <AirportOntology:ConsistOf rdf:resource="&AirportOntology;Cairo_C1"/>
+        <AirportOntology:ConsistOf rdf:resource="&AirportOntology;Cairo_K"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#Cairo_K -->
+
+    <NamedIndividual rdf:about="&AirportOntology;Cairo_K">
+        <rdf:type rdf:resource="&AirportOntology;Taxiway"/>
+        <AirportOntology:Name rdf:datatype="&xsd;string">K</AirportOntology:Name>
+        <AirportOntology:MaintenanceStatus rdf:datatype="&xsd;string">open</AirportOntology:MaintenanceStatus>
+        <AirportOntology:LocationOf rdf:resource="&AirportOntology;Boeing_UWD20"/>
+        <AirportOntology:HasEntranceTo rdf:resource="&AirportOntology;Cairo_02E"/>
+        <AirportOntology:IsPartOf rdf:resource="&AirportOntology;Cairo_CAI"/>
+    </NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.5.0) http://owlapi.sourceforge.net -->
+

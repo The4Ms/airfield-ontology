@@ -1,0 +1,25 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#>
+
+select ?runway ?len where{
+	{
+		?airfield a uri:Airfield.
+		?runway a uri:Runway.
+		?airfield uri:ID ?id.
+		?runway uri:IsPartOf ?airfield.
+		?runway uri:Length ?len.
+		filter ( ?id = Cairo_02E )
+	}
+	minus
+	{
+		?airfield a uri:Airfield.
+		?runway a uri:Runway.
+		?airfield uri:ID ?id.
+		?runway uri:IsPartOf ?airfield.
+		?runway uri:LocationOf ?aircraft.
+		filter ( ?id = Cairo_02E )
+	}
+}
