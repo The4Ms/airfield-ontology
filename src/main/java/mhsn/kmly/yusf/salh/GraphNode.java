@@ -1,3 +1,4 @@
+package mhsn.kmly.yusf.salh;
 
 public class GraphNode {
 	public String name;

@@ -1,3 +1,4 @@
+package mhsn.kmly.yusf.salh;
 
 public class Graph {
 	// petr's adjList graph representation ( yes, petr of topcoder :D )
