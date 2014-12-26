@@ -27,11 +27,11 @@ public class OntologySchema {
 		classes = new HashMap<String, Resource>();
 		objectProperties = new HashMap<String, Resource>();
 		dataProperties = new HashMap<String, Resource>();
-		String propertyURL = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
+		String propertyURI = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
 		
-		String valueURL = "http://www.w3.org/2002/07/owl#Class";
-		Property property = model.createProperty(propertyURL);
-		Resource value = model.createResource(valueURL);
+		String valueURI = "http://www.w3.org/2002/07/owl#Class";
+		Property property = model.createProperty(propertyURI);
+		Resource value = model.createResource(valueURI);
 		Resource tempSubject = null;
 		ResIterator resIterator = model.listResourcesWithProperty(property, value);
 		while(resIterator.hasNext()){
@@ -39,18 +39,18 @@ public class OntologySchema {
 			classes.put(tempSubject.getLocalName(), tempSubject);
 		}
 		
-		valueURL = "http://www.w3.org/2002/07/owl#ObjectProperty";
-		property = model.createProperty(propertyURL);
-		value = model.createResource(valueURL);
+		valueURI = "http://www.w3.org/2002/07/owl#ObjectProperty";
+		property = model.createProperty(propertyURI);
+		value = model.createResource(valueURI);
 		resIterator = model.listResourcesWithProperty(property, value);
 		while(resIterator.hasNext()){
 			tempSubject = resIterator.nextResource();
 			objectProperties.put(tempSubject.getLocalName(), tempSubject);
 		}
 		
-		valueURL = "http://www.w3.org/2002/07/owl#DatatypeProperty";
-		property = model.createProperty(propertyURL);
-		value = model.createResource(valueURL);
+		valueURI = "http://www.w3.org/2002/07/owl#DatatypeProperty";
+		property = model.createProperty(propertyURI);
+		value = model.createResource(valueURI);
 		resIterator = model.listResourcesWithProperty(property, value);
 		while(resIterator.hasNext()){
 			tempSubject = resIterator.nextResource();
@@ -59,6 +59,51 @@ public class OntologySchema {
 	}
 	
 	public Graph buildSchemaGraph(){
+		if(model == null)
+			throw new NullPointerException(
+					"the ontology model has not been initialized");
+		
+		Graph schemaGraph = new Graph();
+		
+		for(String name : classes.keySet()){
+			GraphNode graphNode = new GraphNode(name, "class");
+			schemaGraph.addNode(graphNode);
+		}
+		
+		for(String name : dataProperties.keySet()){
+			GraphNode graphNode = new GraphNode(name, "dataProperty");
+			schemaGraph.addNode(graphNode);
+		}
+		
+		String domainPropertyURI = "http://www.w3.org/2000/01/rdf-schema#domain";
+		String rangePropertyURI = "http://www.w3.org/2000/01/rdf-schema#range";
+		Property domainProperty = model.createProperty(domainPropertyURI);
+		Property rangeProperty = model.createProperty(rangePropertyURI);
+		
+		for(String name : objectProperties.keySet()){
+			String srcClassName  = objectProperties.get(name).
+										getPropertyResourceValue(domainProperty).
+										getLocalName();
+			String destClassName  = objectProperties.get(name).
+										getPropertyResourceValue(rangeProperty).
+										getLocalName();
+			
+			GraphEdge edge = new GraphEdge(name);
+			schemaGraph.addEdge(srcClassName, destClassName, edge);
+		}
+		
+		for(String name : dataProperties.keySet()){
+			String srcClassName  = objectProperties.get(name).
+										getPropertyResourceValue(domainProperty).
+										getLocalName();
+			GraphEdge edge = new GraphEdge("has");
+			schemaGraph.addEdge(srcClassName, name, edge);
+		}
+		
+		return schemaGraph;
+	}
+	
+	public Graph buildIndividualsGraph(){
 		if(model == null)
 			throw new NullPointerException(
 					"the ontology model has not been initialized");
