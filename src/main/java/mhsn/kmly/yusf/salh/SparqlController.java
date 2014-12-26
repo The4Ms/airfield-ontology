@@ -43,6 +43,7 @@ public class SparqlController extends HttpServlet {
 
 				String jsonRes = s.asString(res);
 
+				response.setContentType("application/json");
 				PrintWriter writer = response.getWriter();
 				writer.print(jsonRes);
 				writer.close();
@@ -50,6 +51,7 @@ public class SparqlController extends HttpServlet {
 			else if(c.getQuery().isAskType()){
 				boolean res = c.execAsk();
 
+				response.setContentType("application/json");
 				PrintWriter writer = response.getWriter();
 				writer.print(res);
 				writer.close();
