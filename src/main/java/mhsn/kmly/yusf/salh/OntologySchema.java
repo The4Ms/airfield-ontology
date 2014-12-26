@@ -1,3 +1,5 @@
+package mhsn.kmly.yusf.salh;
+
 import java.util.HashMap;
 
 import com.hp.hpl.jena.rdf.model.Model;
