@@ -9,8 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+import com.hp.hpl.jena.ontology.OntModel;
+import com.hp.hpl.jena.query.QueryExecution;
+import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.shared.Lock;
 import com.hp.hpl.jena.sparql.resultset.JSONOutput;
 
 @WebServlet(displayName = "SparqlController", urlPatterns = { "/sparql" })
@@ -24,16 +27,39 @@ public class SparqlController extends HttpServlet {
 
 		String query = request.getParameter("query");
 
-		ResultSet res = (ResultSet)SparqlHandlerProvider.getSparqlHandler()
-				.excuteQuery(query);
+		OntModel model = ModelProvider.MODEL;
 
-		JSONOutput s = new JSONOutput();
+		model.enterCriticalSection(Lock.WRITE);
 		
-		String jsonRes = s.asString(res);
-		
-		PrintWriter writer = response.getWriter();
-		writer.print(jsonRes.length() == 0 ? "No data found" : jsonRes); 
-		writer.close();
-		
+		try {
+			
+			QueryExecution c = QueryExecutionFactory.create(query, model);
+
+			if(c.getQuery().isSelectType()){
+				ResultSet res = c.execSelect();
+
+				JSONOutput s = new JSONOutput();
+
+				String jsonRes = s.asString(res);
+
+				PrintWriter writer = response.getWriter();
+				writer.print(jsonRes);
+				writer.close();
+			}
+			else if(c.getQuery().isAskType()){
+				boolean res = c.execAsk();
+
+				PrintWriter writer = response.getWriter();
+				writer.print(res);
+				writer.close();
+			}
+			else{
+				response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+			}
+			
+		} finally {
+			model.leaveCriticalSection();
+		}
+
 	}
 }
