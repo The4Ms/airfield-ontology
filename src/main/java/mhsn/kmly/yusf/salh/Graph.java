@@ -62,6 +62,9 @@ public class Graph {
 					"Destenation node index out of bound: number of nodes = "
 					+ nodesNumber + ", Destenation node index = " + destNodeIndex);
 		
+		if(newEdge == null)
+			throw new NullPointerException("GraphEdge");
+		
 		next.add(head.get(srcNodeIndex));
 		to.add(destNodeIndex);
 		edges.add(newEdge);
@@ -76,10 +79,19 @@ public class Graph {
 	void addEdge(String srcNodeName, String destNodeName, GraphEdge newEdge){
 		if(!uniqueNodeNames)
 			throw new RuntimeException(
-					"Node names in the graph are not unique");
+					"Node names in the graph are not unique");		
 		
-		int srcNodeIndex = nodesIndicesMap.get(srcNodeName);
-		int destNodeIndex = nodesIndicesMap.get(destNodeName);
+		Integer srcNodeIndex = nodesIndicesMap.get(srcNodeName);
+		Integer destNodeIndex = nodesIndicesMap.get(destNodeName);
+		
+		if(srcNodeIndex == null)
+			throw new RuntimeException(
+					srcNodeName + " node is not found in the graph");
+		
+		if(destNodeIndex == null)
+			throw new RuntimeException(
+					destNodeName + " node is not found in the graph");
+		
 		addEdge(srcNodeIndex, destNodeIndex, newEdge);
 	}
 }

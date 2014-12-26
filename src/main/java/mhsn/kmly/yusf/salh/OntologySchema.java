@@ -2,64 +2,69 @@ package mhsn.kmly.yusf.salh;
 
 import java.util.HashMap;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.Property;
-import com.hp.hpl.jena.rdf.model.ResIterator;
-import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.ontology.DatatypeProperty;
+import com.hp.hpl.jena.ontology.Individual;
+import com.hp.hpl.jena.ontology.ObjectProperty;
+import com.hp.hpl.jena.ontology.OntClass;
+import com.hp.hpl.jena.ontology.OntModel;
+import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 
 public class OntologySchema {
-	private Model model;
-	private HashMap<String, Resource> classes;
-	private HashMap<String, Resource> objectProperties;
-	private HashMap<String, Resource> dataProperties;
+	private OntModel ontModel;
+	private HashMap<String, OntClass> classes;
+	private HashMap<String, ObjectProperty> objectProperties;
+	private HashMap<String, DatatypeProperty> dataProperties;
+	private HashMap<String, Individual> individuals;
 	
 	OntologySchema(){
-		model = null;
+		ontModel = null;
 		classes = null;
+		objectProperties = null;
+		dataProperties = null;
 	}
 	
-	OntologySchema(Model _model){
-		this.setModel(_model);
+	OntologySchema(OntModel _ontModel){
+		this.setModel(_ontModel);
 	}
 	
-	public void setModel(Model _model){
-		this.model = _model;
-		classes = new HashMap<String, Resource>();
-		objectProperties = new HashMap<String, Resource>();
-		dataProperties = new HashMap<String, Resource>();
-		String propertyURI = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
+	public void setModel(OntModel _ontModel){
+		this.ontModel = _ontModel;
+		classes = new HashMap<String, OntClass>();
+		objectProperties = new HashMap<String, ObjectProperty>();
+		dataProperties = new HashMap<String, DatatypeProperty>();
+		individuals = new HashMap<String, Individual>();
 		
-		String valueURI = "http://www.w3.org/2002/07/owl#Class";
-		Property property = model.createProperty(propertyURI);
-		Resource value = model.createResource(valueURI);
-		Resource tempSubject = null;
-		ResIterator resIterator = model.listResourcesWithProperty(property, value);
-		while(resIterator.hasNext()){
-			tempSubject = resIterator.nextResource();
-			classes.put(tempSubject.getLocalName(), tempSubject);
+		OntClass tempOntClass = null;
+		ExtendedIterator<OntClass> classIterator = ontModel.listNamedClasses();
+		while(classIterator.hasNext()){
+			tempOntClass = classIterator.next();
+			classes.put(tempOntClass.getLocalName(),tempOntClass);
 		}
 		
-		valueURI = "http://www.w3.org/2002/07/owl#ObjectProperty";
-		property = model.createProperty(propertyURI);
-		value = model.createResource(valueURI);
-		resIterator = model.listResourcesWithProperty(property, value);
-		while(resIterator.hasNext()){
-			tempSubject = resIterator.nextResource();
-			objectProperties.put(tempSubject.getLocalName(), tempSubject);
+		ObjectProperty tempObjectProperty = null;
+		ExtendedIterator<ObjectProperty> objectPropertyIterator = ontModel.listObjectProperties();
+		while(objectPropertyIterator.hasNext()){
+			tempObjectProperty = objectPropertyIterator.next();
+			objectProperties.put(tempObjectProperty.getLocalName(),tempObjectProperty);
 		}
 		
-		valueURI = "http://www.w3.org/2002/07/owl#DatatypeProperty";
-		property = model.createProperty(propertyURI);
-		value = model.createResource(valueURI);
-		resIterator = model.listResourcesWithProperty(property, value);
-		while(resIterator.hasNext()){
-			tempSubject = resIterator.nextResource();
-			dataProperties.put(tempSubject.getLocalName(), tempSubject);
+		DatatypeProperty tempDatatypeProperty = null;
+		ExtendedIterator<DatatypeProperty> datatypePropertyIterator = ontModel.listDatatypeProperties();
+		while(datatypePropertyIterator.hasNext()){
+			tempDatatypeProperty = datatypePropertyIterator.next();
+			dataProperties.put(tempDatatypeProperty.getLocalName(),tempDatatypeProperty);
+		}
+		
+		Individual tempIndividual = null;
+		ExtendedIterator<Individual> individualIterator = ontModel.listIndividuals();
+		while(individualIterator.hasNext()){
+			tempIndividual = individualIterator.next();
+			individuals.put(tempIndividual.getLocalName(), tempIndividual);
 		}
 	}
 	
 	public Graph buildSchemaGraph(){
-		if(model == null)
+		if(ontModel == null)
 			throw new NullPointerException(
 					"the ontology model has not been initialized");
 		
@@ -75,27 +80,27 @@ public class OntologySchema {
 			schemaGraph.addNode(graphNode);
 		}
 		
-		String domainPropertyURI = "http://www.w3.org/2000/01/rdf-schema#domain";
-		String rangePropertyURI = "http://www.w3.org/2000/01/rdf-schema#range";
-		Property domainProperty = model.createProperty(domainPropertyURI);
-		Property rangeProperty = model.createProperty(rangePropertyURI);
+		for(String name : classes.keySet()){
+			OntClass subClass = classes.get(name);
+			ExtendedIterator<OntClass> superClassIterator = subClass.listSuperClasses(true);
+			while(superClassIterator.hasNext()){
+				String superClassName = superClassIterator.next().getLocalName();
+				GraphEdge edge = new GraphEdge("is a");
+				schemaGraph.addEdge(subClass.getLocalName(), superClassName, edge);
+			}
+		}
 		
 		for(String name : objectProperties.keySet()){
-			String srcClassName  = objectProperties.get(name).
-										getPropertyResourceValue(domainProperty).
-										getLocalName();
-			String destClassName  = objectProperties.get(name).
-										getPropertyResourceValue(rangeProperty).
-										getLocalName();
-			
+			ObjectProperty objectProperty = objectProperties.get(name);
+			String srcClassName = objectProperty.getDomain().getLocalName();
+			String destClassName = objectProperty.getRange().getLocalName();
 			GraphEdge edge = new GraphEdge(name);
 			schemaGraph.addEdge(srcClassName, destClassName, edge);
 		}
 		
 		for(String name : dataProperties.keySet()){
-			String srcClassName  = objectProperties.get(name).
-										getPropertyResourceValue(domainProperty).
-										getLocalName();
+			DatatypeProperty dataProperty = dataProperties.get(name);
+			String srcClassName = dataProperty.getDomain().getLocalName();
 			GraphEdge edge = new GraphEdge("has");
 			schemaGraph.addEdge(srcClassName, name, edge);
 		}
@@ -104,7 +109,7 @@ public class OntologySchema {
 	}
 	
 	public Graph buildIndividualsGraph(){
-		if(model == null)
+		if(ontModel == null)
 			throw new NullPointerException(
 					"the ontology model has not been initialized");
 		
