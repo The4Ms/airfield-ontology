@@ -470,7 +470,7 @@
         <rdf:type rdf:resource="&AirportOntology;Runway"/>
         <AirportOntology:GroundSurfaceName rdf:datatype="&xsd;string">05C</AirportOntology:GroundSurfaceName>
         <AirportOntology:Length rdf:datatype="&xsd;integer">1200</AirportOntology:Length>
-        <AirportOntology:GroundType rdf:datatype="&xsd;string">grass</AirportOntology:GroundType>
+        <AirportOntology:GroundType>grass</AirportOntology:GroundType>
         <AirportOntology:LocationOf rdf:resource="&AirportOntology;AirBus_KMN20"/>
         <AirportOntology:LocationOf rdf:resource="&AirportOntology;AirBus_SKU10"/>
         <AirportOntology:GroundSurfaceIsPartOf rdf:resource="&AirportOntology;Almaza_HELA"/>
@@ -485,7 +485,7 @@
         <rdf:type rdf:resource="&AirportOntology;Runway"/>
         <AirportOntology:GroundSurfaceName rdf:datatype="&xsd;string">14D</AirportOntology:GroundSurfaceName>
         <AirportOntology:Length rdf:datatype="&xsd;integer">1500</AirportOntology:Length>
-        <AirportOntology:GroundType rdf:datatype="&xsd;string">asphalt</AirportOntology:GroundType>
+        <AirportOntology:GroundType>asphalt</AirportOntology:GroundType>
         <AirportOntology:HasExitTo rdf:resource="&AirportOntology;Almaza_A"/>
         <AirportOntology:GroundSurfaceIsPartOf rdf:resource="&AirportOntology;Almaza_HELA"/>
     </NamedIndividual>
@@ -497,7 +497,7 @@
     <NamedIndividual rdf:about="&AirportOntology;Almaza_A">
         <rdf:type rdf:resource="&AirportOntology;Taxiway"/>
         <AirportOntology:GroundSurfaceName rdf:datatype="&xsd;string">A</AirportOntology:GroundSurfaceName>
-        <AirportOntology:MaintenanceStatus rdf:datatype="&xsd;string">open</AirportOntology:MaintenanceStatus>
+        <AirportOntology:MaintenanceStatus>open</AirportOntology:MaintenanceStatus>
         <AirportOntology:HasEntranceTo rdf:resource="&AirportOntology;Almaza_14D"/>
         <AirportOntology:GroundSurfaceIsPartOf rdf:resource="&AirportOntology;Almaza_HELA"/>
     </NamedIndividual>
@@ -541,7 +541,7 @@
         <rdf:type rdf:resource="&AirportOntology;Airfield"/>
         <AirportOntology:Elevation rdf:datatype="&xsd;integer">200</AirportOntology:Elevation>
         <AirportOntology:AirfieldID rdf:datatype="&xsd;string">HELA</AirportOntology:AirfieldID>
-        <AirportOntology:UsageType rdf:datatype="&xsd;string">military</AirportOntology:UsageType>
+        <AirportOntology:UsageType>military</AirportOntology:UsageType>
         <AirportOntology:ConsistOfGroundSurface rdf:resource="&AirportOntology;Almaza_05C"/>
         <AirportOntology:ConsistOfGroundSurface rdf:resource="&AirportOntology;Almaza_14D"/>
         <AirportOntology:ConsistOfGroundSurface rdf:resource="&AirportOntology;Almaza_A"/>
@@ -557,7 +557,7 @@
     <NamedIndividual rdf:about="&AirportOntology;Almaza_M">
         <rdf:type rdf:resource="&AirportOntology;Taxiway"/>
         <AirportOntology:GroundSurfaceName rdf:datatype="&xsd;string">M</AirportOntology:GroundSurfaceName>
-        <AirportOntology:MaintenanceStatus rdf:datatype="&xsd;string">locked</AirportOntology:MaintenanceStatus>
+        <AirportOntology:MaintenanceStatus>locked</AirportOntology:MaintenanceStatus>
         <AirportOntology:HasEntranceTo rdf:resource="&AirportOntology;Almaza_05C"/>
         <AirportOntology:GroundSurfaceIsPartOf rdf:resource="&AirportOntology;Almaza_HELA"/>
     </NamedIndividual>
@@ -612,7 +612,7 @@
         <rdf:type rdf:resource="&AirportOntology;Runway"/>
         <AirportOntology:GroundSurfaceName rdf:datatype="&xsd;string">02E</AirportOntology:GroundSurfaceName>
         <AirportOntology:Length rdf:datatype="&xsd;integer">2000</AirportOntology:Length>
-        <AirportOntology:GroundType rdf:datatype="&xsd;string">asphalt</AirportOntology:GroundType>
+        <AirportOntology:GroundType>asphalt</AirportOntology:GroundType>
         <AirportOntology:GroundSurfaceIsPartOf rdf:resource="&AirportOntology;Cairo_CAI"/>
         <AirportOntology:HasExitTo rdf:resource="&AirportOntology;Cairo_K"/>
     </NamedIndividual>
@@ -625,7 +625,7 @@
         <rdf:type rdf:resource="&AirportOntology;Runway"/>
         <AirportOntology:GroundSurfaceName rdf:datatype="&xsd;string">06D</AirportOntology:GroundSurfaceName>
         <AirportOntology:Length rdf:datatype="&xsd;integer">1200</AirportOntology:Length>
-        <AirportOntology:GroundType rdf:datatype="&xsd;string">asphalt</AirportOntology:GroundType>
+        <AirportOntology:GroundType>asphalt</AirportOntology:GroundType>
         <AirportOntology:LocationOf rdf:resource="&AirportOntology;Boeing_STU30"/>
         <AirportOntology:HasExitTo rdf:resource="&AirportOntology;Cairo_B"/>
         <AirportOntology:GroundSurfaceIsPartOf rdf:resource="&AirportOntology;Cairo_CAI"/>
@@ -638,7 +638,7 @@
     <NamedIndividual rdf:about="&AirportOntology;Cairo_B">
         <rdf:type rdf:resource="&AirportOntology;Taxiway"/>
         <AirportOntology:GroundSurfaceName rdf:datatype="&xsd;string">B</AirportOntology:GroundSurfaceName>
-        <AirportOntology:MaintenanceStatus rdf:datatype="&xsd;string">locked</AirportOntology:MaintenanceStatus>
+        <AirportOntology:MaintenanceStatus>locked</AirportOntology:MaintenanceStatus>
         <AirportOntology:HasEntranceTo rdf:resource="&AirportOntology;Cairo_06D"/>
         <AirportOntology:GroundSurfaceIsPartOf rdf:resource="&AirportOntology;Cairo_CAI"/>
     </NamedIndividual>
@@ -692,7 +692,7 @@
         <rdf:type rdf:resource="&AirportOntology;Airfield"/>
         <AirportOntology:Elevation rdf:datatype="&xsd;integer">300</AirportOntology:Elevation>
         <AirportOntology:AirfieldID rdf:datatype="&xsd;string">CAI</AirportOntology:AirfieldID>
-        <AirportOntology:UsageType rdf:datatype="&xsd;string">civilian</AirportOntology:UsageType>
+        <AirportOntology:UsageType>civilian</AirportOntology:UsageType>
         <AirportOntology:ConsistOfGroundSurface rdf:resource="&AirportOntology;Cairo_02E"/>
         <AirportOntology:ConsistOfGroundSurface rdf:resource="&AirportOntology;Cairo_06D"/>
         <AirportOntology:ConsistOfGroundSurface rdf:resource="&AirportOntology;Cairo_B"/>
@@ -709,7 +709,7 @@
     <NamedIndividual rdf:about="&AirportOntology;Cairo_K">
         <rdf:type rdf:resource="&AirportOntology;Taxiway"/>
         <AirportOntology:GroundSurfaceName rdf:datatype="&xsd;string">K</AirportOntology:GroundSurfaceName>
-        <AirportOntology:MaintenanceStatus rdf:datatype="&xsd;string">open</AirportOntology:MaintenanceStatus>
+        <AirportOntology:MaintenanceStatus>open</AirportOntology:MaintenanceStatus>
         <AirportOntology:LocationOf rdf:resource="&AirportOntology;Boeing_UWD20"/>
         <AirportOntology:HasEntranceTo rdf:resource="&AirportOntology;Cairo_02E"/>
         <AirportOntology:GroundSurfaceIsPartOf rdf:resource="&AirportOntology;Cairo_CAI"/>
