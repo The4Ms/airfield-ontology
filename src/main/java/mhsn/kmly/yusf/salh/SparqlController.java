@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
+import com.hp.hpl.jena.query.QueryParseException;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.shared.Lock;
 import com.hp.hpl.jena.sparql.resultset.JSONOutput;
@@ -54,10 +55,14 @@ public class SparqlController extends HttpServlet {
 				writer.close();
 			}
 			else{
-				response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Only SELECT and ASK queries are supported");
 			}
 			
-		} finally {
+		}
+		catch(QueryParseException exception){
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Wrong SARQL syntax");
+		}
+		finally {
 			model.leaveCriticalSection();
 		}
 
