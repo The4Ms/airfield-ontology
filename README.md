@@ -18,6 +18,9 @@ Check based on your preferred IDE:
 * [Best Practices for Apache Maven in NetBeans - Open existing project]
 * Or search for maven integeration for your IDE
 
+# Eclipse
+if you use eclipse, Preferences -> Maven -> Check on "Download artifact Source" and "Download artifact JavaDocs"
+
 # Running the server
 open the bash in the project folder, write 
 
