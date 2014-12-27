@@ -29,7 +29,7 @@ public class IndividController extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 
 		OntologySchema sc = new OntologySchema(ModelProvider.MODEL);
-		VisJsGraph g =  sc.buildIndividualsGraph().toVisJsGraph();
+		VisJsGraph g =  IndividualsGrapher.buildIndividualsGraph(ModelProvider.MODEL).toVisJsGraph();
 		
 		// Convert the java object into a JSON object here
 		ObjectMapper mapper = new ObjectMapper();
