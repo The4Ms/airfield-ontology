@@ -23,27 +23,20 @@ import com.hp.hpl.jena.sparql.resultset.JSONOutput;
 public class OntologyController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-
-	// Not the public variable, either this or use a get/set for each variable
-	public class DummyClass implements Serializable {
-		public int x;
-	}
 	
 	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		
-		DummyClass obj = new DummyClass();
-		obj.x = 5;
-		
+		OntologySchema sc = new OntologySchema(ModelProvider.MODEL);
+		VisJsGraph g =  sc.buildSchemaGraph().toVisJsGraph();
 		
 		// Convert the java object into a JSON object here
 		ObjectMapper mapper = new ObjectMapper();
-		String jsonObj = mapper.writeValueAsString(obj);
+		String jsonObj = mapper.writeValueAsString(g);
 		
 		// Returning a normal graph so that you can see it
-		jsonObj = "{\"nodes\":[{\"id\":1,\"label\":\"circle\",\"shape\":\"circle\",\"group\":\"group_x\"},{\"id\":2,\"label\":\"ellipse\",\"shape\":\"ellipse\",\"group\":\"group_x\"},{\"id\":3,\"label\":\"database\",\"shape\":\"database\",\"group\":\"group_x\"},{\"id\":4,\"label\":\"box\",\"shape\":\"box\",\"group\":\"group_x\"}],\"edges\":[{\"from\":3,\"to\":1,\"style\":\"arrow\"},{\"from\":1,\"to\":4,\"style\":\"dash-line\"},{\"from\":1,\"to\":2,\"style\":\"arrow-center\"}]}";
+		//jsonObj = "{\"nodes\":[{\"id\":1,\"label\":\"circle\",\"shape\":\"circle\",\"group\":\"group_x\"},{\"id\":2,\"label\":\"ellipse\",\"shape\":\"ellipse\",\"group\":\"group_x\"},{\"id\":3,\"label\":\"database\",\"shape\":\"database\",\"group\":\"group_x\"},{\"id\":4,\"label\":\"box\",\"shape\":\"box\",\"group\":\"group_x\"}],\"edges\":[{\"from\":3,\"to\":1,\"style\":\"arrow\"},{\"from\":1,\"to\":4,\"style\":\"dash-line\"},{\"from\":1,\"to\":2,\"style\":\"arrow-center\"}]}";
 
 		response.setContentType("application/json");
 		PrintWriter writer = response.getWriter();
