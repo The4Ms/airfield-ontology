@@ -1,4 +1,4 @@
-package mhsn.kmly.yusf.salh;
+package airfield.ontology;
 
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;

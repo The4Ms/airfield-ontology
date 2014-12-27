@@ -1,4 +1,4 @@
-package mhsn.kmly.yusf.salh;
+package airfield.ontology.visualization.individuals;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import airfield.ontology.ModelProvider;
+import airfield.ontology.utils.VisJsGraph;
+import airfield.ontology.visualization.schema.OntologySchema;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.query.QueryExecution;
@@ -20,7 +24,7 @@ import com.hp.hpl.jena.shared.Lock;
 import com.hp.hpl.jena.sparql.resultset.JSONOutput;
 
 @WebServlet(displayName = "IndividController", urlPatterns = { "/individuals" })
-public class IndividController extends HttpServlet {
+public class IndividualsController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	

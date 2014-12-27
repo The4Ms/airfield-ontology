@@ -1,10 +1,11 @@
 import static org.junit.Assert.*;
-import mhsn.kmly.yusf.salh.Graph;
-import mhsn.kmly.yusf.salh.ModelProvider;
-import mhsn.kmly.yusf.salh.OntologySchema;
-import mhsn.kmly.yusf.salh.VisJsGraph;
 
 import org.junit.Test;
+
+import airfield.ontology.ModelProvider;
+import airfield.ontology.utils.Graph;
+import airfield.ontology.utils.VisJsGraph;
+import airfield.ontology.visualization.schema.OntologySchema;
 
 
 public class VisGraph {

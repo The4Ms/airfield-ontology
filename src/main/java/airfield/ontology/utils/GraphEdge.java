@@ -1,4 +1,4 @@
-package mhsn.kmly.yusf.salh;
+package airfield.ontology.utils;
 
 public class GraphEdge {
 	public String label;
@@ -9,7 +9,7 @@ public class GraphEdge {
 		label = "";
 	}
 	
-	GraphEdge(String label){
+	public GraphEdge(String label){
 		this.label = label;
 	}
 }

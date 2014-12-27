@@ -1,6 +1,10 @@
-package mhsn.kmly.yusf.salh;
+package airfield.ontology.visualization.schema;
 
 import java.util.HashMap;
+
+import airfield.ontology.utils.Graph;
+import airfield.ontology.utils.GraphEdge;
+import airfield.ontology.utils.GraphNode;
 
 import com.hp.hpl.jena.ontology.DatatypeProperty;
 import com.hp.hpl.jena.ontology.Individual;

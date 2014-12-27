@@ -1,4 +1,4 @@
-package mhsn.kmly.yusf.salh;
+package airfield.ontology.utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,7 +14,7 @@ public class Graph {
 	private List<Integer> head, next, to;
 	private int nodesNumber, edgesNumber;
 	
-	Graph(){
+	public Graph(){
 		nodesIndicesMap = new HashMap<String, Integer>();
 		nodes = new ArrayList<GraphNode>();
 		edges = new ArrayList<GraphEdge>();
@@ -26,7 +26,7 @@ public class Graph {
 		uniqueNodeNames = true;
 	}
 	
-	Graph(List<GraphNode> nodes, List<GraphEdge> edges, List<Integer> head,
+	public Graph(List<GraphNode> nodes, List<GraphEdge> edges, List<Integer> head,
 			List<Integer> next, List<Integer> to){
 		this.nodes = nodes;
 		this.edges = edges;
@@ -44,7 +44,7 @@ public class Graph {
 		}
 	}
 	
-	void addNode(GraphNode newNode){
+	public void addNode(GraphNode newNode){
 		nodes.add(newNode);
 		head.add(-1);
 		if(nodesIndicesMap.containsKey(newNode.label))
@@ -53,7 +53,7 @@ public class Graph {
 		++nodesNumber;
 	}
 	
-	void addUniqueNode(GraphNode newNode){
+	public void addUniqueNode(GraphNode newNode){
 		if(nodesIndicesMap.containsKey(newNode.label))
 			return;
 		
@@ -63,7 +63,7 @@ public class Graph {
 		++nodesNumber;
 	}
 	
-	void addEdge(int srcNodeIndex, int destNodeIndex, GraphEdge newEdge){
+	public void addEdge(int srcNodeIndex, int destNodeIndex, GraphEdge newEdge){
 		if(srcNodeIndex >= nodesNumber)
 			throw new IndexOutOfBoundsException(
 					"Source node index out of bound: number of nodes = "
@@ -91,7 +91,7 @@ public class Graph {
 	/*
 	 * To be used only when the nodes have unique names.
 	 */
-	void addEdge(String srcNodeName, String destNodeName, GraphEdge newEdge){
+	public void addEdge(String srcNodeName, String destNodeName, GraphEdge newEdge){
 		if(!uniqueNodeNames)
 			throw new RuntimeException(
 					"Node names in the graph are not unique");		

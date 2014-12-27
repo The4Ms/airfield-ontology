@@ -1,4 +1,4 @@
-package mhsn.kmly.yusf.salh;
+package airfield.ontology.utils;
 
 public class VisJsGraph {
 	public VisJsGraphNode nodes[];

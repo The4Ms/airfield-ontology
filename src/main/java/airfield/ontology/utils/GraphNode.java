@@ -1,4 +1,4 @@
-package mhsn.kmly.yusf.salh;
+package airfield.ontology.utils;
 
 public class GraphNode {
 	public String label;
@@ -9,7 +9,7 @@ public class GraphNode {
 		type = "";
 	}
 	
-	GraphNode(String name, String type){
+	public GraphNode(String name, String type){
 		this.label = name;
 		this.type = type;
 	}
