@@ -72,10 +72,10 @@ public class OntologySchema {
 		Graph schemaGraph = new Graph();
 		//schemaGraph.addNode(new GraphNode("thing", "class"));
 		for(String name : classes.keySet())
-			schemaGraph.addNode(new GraphNode(name, "class"));
+			schemaGraph.addUniqueNode(new GraphNode(name, "class"));
 		
 		for(String name : dataProperties.keySet())
-			schemaGraph.addNode(new GraphNode(name, "dataProperty"));
+			schemaGraph.addUniqueNode(new GraphNode(name, "dataProperty"));
 		
 		for(String name : classes.keySet()){
 			OntClass subClass = classes.get(name);
@@ -109,7 +109,7 @@ public class OntologySchema {
 		
 		Graph individualsGraph = new Graph();
 		for(String name : individuals.keySet())
-			individualsGraph.addNode(new GraphNode(name, "individual"));
+			individualsGraph.addUniqueNode(new GraphNode(name, "individual"));
 		
 		for(String name : individuals.keySet()){
 			Individual subject = individuals.get(name);
@@ -126,7 +126,7 @@ public class OntologySchema {
 					destNodeName = property.getObject().asResource().getLocalName();
 				else{
 					destNodeName = property.getObject().asLiteral().getValue().toString();
-					individualsGraph.addNode(new GraphNode(destNodeName, "data"));
+					individualsGraph.addUniqueNode(new GraphNode(destNodeName, "data"));
 				}
 				
 				individualsGraph.addEdge(name, propertyName, new GraphEdge(propertyName));

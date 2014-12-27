@@ -53,6 +53,16 @@ public class Graph {
 		++nodesNumber;
 	}
 	
+	void addUniqueNode(GraphNode newNode){
+		if(nodesIndicesMap.containsKey(newNode.label))
+			return;
+		
+		nodes.add(newNode);
+		head.add(-1);
+		nodesIndicesMap.put(newNode.label, nodesNumber);
+		++nodesNumber;
+	}
+	
 	void addEdge(int srcNodeIndex, int destNodeIndex, GraphEdge newEdge){
 		if(srcNodeIndex >= nodesNumber)
 			throw new IndexOutOfBoundsException(
