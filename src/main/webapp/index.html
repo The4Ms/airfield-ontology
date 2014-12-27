@@ -36,17 +36,17 @@
 				<div class="alert alert-info">
 
 					<form name="customQuery" class="form-group">
-						<select class="form-control"
-							data-bind="options: queries,
-									   optionsText: 'desc',
-                       				   value: query">
-						</select>
-						<div data-bind="with: query">
-							<label data-bind="text: desc"></label>
+						<div class="form-group">
+							<label>Select a prepared query (the real query will appear below):</label> <select class="form-control"
+								data-bind="options: queries, optionsText: 'desc', value: query">
+							</select>
+						</div>
 
+						<div data-bind="with: query">
 							<div data-bind="foreach: paramters">
 								<div class="form-group">
-									<input class="form-control isParam" data-bind="textInput: name" />
+									<input class="form-control isParam"
+										data-bind="attr: {placeholder: name}" />
 								</div>
 							</div>
 
@@ -57,36 +57,40 @@
 					</form>
 				</div>
 
-				<form name="queryForm" class="form-group">
-					<div class="form-group">
-						<textarea name="query" class="form-control" rows="18" cols="80">
+				<div class="alert alert-info">
+					<form name="queryForm" class="form-group">
+					
+						<label>Or write custom query:</label>
+						<div class="form-group">
+							<textarea id="query" name="query" class="form-control" rows="18" cols="80">
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#>
 							</textarea>
+						</div>
+
+						<button id="queryButton" class="btn btn-primary pull-right"
+							onclick="excuteQuery()" type="button">Query</button>
+						<div class="clearfix"></div>
+					</form>
+
+					<div id="QueryResultPanel" data-bind="with: queryResult">
+						<table class="table table-hover">
+							<thead>
+								<tr data-bind="foreach: head.vars">
+									<th data-bind="text: $data"></th>
+								</tr>
+							</thead>
+							<tbody data-bind="foreach: {data: results.bindings, as: 'item'}">
+								<tr
+									data-bind="foreach: { data: $parent.head.vars, as: 'varName' }">
+									<td data-bind="text: item[varName]['value']"></td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
-
-					<button id="queryButton" class="btn btn-primary pull-right"
-						onclick="excuteQuery()" type="button">Query</button>
-					<div class="clearfix"></div>
-				</form>
-
-				<div id="QueryResultPanel" data-bind="with: queryResult">
-					<table class="table table-hover">
-						<thead>
-							<tr data-bind="foreach: head.vars">
-								<th data-bind="text: $data"></th>
-							</tr>
-						</thead>
-						<tbody data-bind="foreach: {data: results.bindings, as: 'item'}">
-							<tr
-								data-bind="foreach: { data: $parent.head.vars, as: 'varName' }">
-								<td data-bind="text: item[varName]['value']"></td>
-							</tr>
-						</tbody>
-					</table>
 				</div>
 			</div>
 		</div>
@@ -120,10 +124,10 @@ PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOn
 
 	var queries = [
 			{
-				'desc' : 'I want to get air craft by ID',
+				'desc' : 'I want to get aircraft by ID',
 				'query' : 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#> SELECT ?aircraft where { ?aircraft a uri:Aircraft. ?aircraft uri:AircraftID ?id. filter ( ?id = "%s").}',
 				'paramters' : [ {
-					'name' : 'air craft id',
+					'name' : 'Aircraft Id',
 					'type' : 'string'
 				} ]
 			},
@@ -148,10 +152,11 @@ PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOn
 			$('.isParam').each(function() {
 				params.push(this.value);
 			});
+		
+			var realQuery = sprintf(data.query, params);
 
-			console.log(params);
-
-			excuteMyQuery(sprintf(data.query, params));
+			$('#query').html(realQuery);
+			excuteMyQuery(realQuery);
 		}
 	};
 
