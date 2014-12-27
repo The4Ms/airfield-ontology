@@ -53,6 +53,16 @@ public class Graph {
 		++nodesNumber;
 	}
 	
+	void addUniqueNode(GraphNode newNode){
+		if(nodesIndicesMap.containsKey(newNode.label))
+			return;
+		
+		nodes.add(newNode);
+		head.add(-1);
+		nodesIndicesMap.put(newNode.label, nodesNumber);
+		++nodesNumber;
+	}
+	
 	void addEdge(int srcNodeIndex, int destNodeIndex, GraphEdge newEdge){
 		if(srcNodeIndex >= nodesNumber)
 			throw new IndexOutOfBoundsException(
@@ -65,7 +75,7 @@ public class Graph {
 					+ nodesNumber + ", Destenation node index = " + destNodeIndex);
 		
 		if(newEdge == null)
-			throw new NullPointerException("GraphEdge");
+			throw new NullPointerException("GraphEdge is null");
 		
 		next.add(head.get(srcNodeIndex));
 		to.add(destNodeIndex);
@@ -161,7 +171,7 @@ public class Graph {
 	}
 	
 	public VisJsGraphNode[] toVisJsGraphNodes(){
-		String shapes[] = {"ellipse", "square", "circle", "box",
+		String shapes[] = {"ellipse", "box", "circle", "square",
 							"triangle", "triangleDown", "star"};
 		HashMap<String, String> usedShapes = new HashMap<String, String>();
 		int nextShapeIndex = 0;
