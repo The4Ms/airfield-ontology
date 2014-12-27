@@ -16,7 +16,6 @@ public class OntologySchema {
 	private HashMap<String, DatatypeProperty> dataProperties;
 	private HashMap<String, Individual> individuals;
 	
-	
 	OntologySchema(){
 		ontModel = null;
 		classes = null;
@@ -70,40 +69,33 @@ public class OntologySchema {
 					"the ontology model has not been initialized");
 		
 		Graph schemaGraph = new Graph();
+		//schemaGraph.addNode(new GraphNode("thing", "class"));
+		for(String name : classes.keySet())
+			schemaGraph.addNode(new GraphNode(name, "class"));
 		
-		for(String name : classes.keySet()){
-			GraphNode graphNode = new GraphNode(name, "class");
-			schemaGraph.addNode(graphNode);
-		}
-		
-		for(String name : dataProperties.keySet()){
-			GraphNode graphNode = new GraphNode(name, "dataProperty");
-			schemaGraph.addNode(graphNode);
-		}
+		for(String name : dataProperties.keySet())
+			schemaGraph.addNode(new GraphNode(name, "dataProperty"));
 		
 		for(String name : classes.keySet()){
 			OntClass subClass = classes.get(name);
 			ExtendedIterator<OntClass> superClassIterator = subClass.listSuperClasses(true);
-			while(superClassIterator.hasNext()){
-				String superClassName = superClassIterator.next().getLocalName();
-				GraphEdge edge = new GraphEdge("is a");
-				schemaGraph.addEdge(subClass.getLocalName(), superClassName, edge);
-			}
+			while(superClassIterator.hasNext())
+				schemaGraph.addEdge(subClass.getLocalName(),
+									superClassIterator.next().getLocalName(),
+									new GraphEdge("is a"));
 		}
 		
 		for(String name : objectProperties.keySet()){
 			ObjectProperty objectProperty = objectProperties.get(name);
 			String srcClassName = objectProperty.getDomain().getLocalName();
 			String destClassName = objectProperty.getRange().getLocalName();
-			GraphEdge edge = new GraphEdge(name);
-			schemaGraph.addEdge(srcClassName, destClassName, edge);
+			schemaGraph.addEdge(srcClassName, destClassName, new GraphEdge(name));
 		}
 		
 		for(String name : dataProperties.keySet()){
 			DatatypeProperty dataProperty = dataProperties.get(name);
 			String srcClassName = dataProperty.getDomain().getLocalName();
-			GraphEdge edge = new GraphEdge("has");
-			schemaGraph.addEdge(srcClassName, name, edge);
+			schemaGraph.addEdge(srcClassName, name, new GraphEdge("has"));
 		}
 		
 		return schemaGraph;

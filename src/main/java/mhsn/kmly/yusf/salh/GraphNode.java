@@ -1,16 +1,16 @@
 package mhsn.kmly.yusf.salh;
 
 public class GraphNode {
-	public String name;
+	public String label;
 	public String type;
 	
 	GraphNode(){
-		name = "";
+		label = "";
 		type = "";
 	}
 	
 	GraphNode(String name, String type){
-		this.name = name;
+		this.label = name;
 		this.type = type;
 	}
 }

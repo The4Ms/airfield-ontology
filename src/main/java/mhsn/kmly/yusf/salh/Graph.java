@@ -14,7 +14,6 @@ public class Graph {
 	private List<Integer> head, next, to;
 	private int nodesNumber, edgesNumber;
 	
-	
 	Graph(){
 		nodesIndicesMap = new HashMap<String, Integer>();
 		nodes = new ArrayList<GraphNode>();
@@ -37,18 +36,18 @@ public class Graph {
 		uniqueNodeNames = true;
 		
 		for(int i=0;i<nodes.size();++i){
-			if(nodesIndicesMap.containsKey(nodes.get(i).name))
+			if(nodesIndicesMap.containsKey(nodes.get(i).label))
 				uniqueNodeNames = false;
-			else nodesIndicesMap.put(nodes.get(i).name, i);
+			else nodesIndicesMap.put(nodes.get(i).label, i);
 		}
 	}
 	
 	void addNode(GraphNode newNode){
 		nodes.add(newNode);
 		head.add(-1);
-		if(nodesIndicesMap.containsKey(newNode.name))
+		if(nodesIndicesMap.containsKey(newNode.label))
 			uniqueNodeNames = false;
-		else nodesIndicesMap.put(newNode.name, nodesNumber);
+		else nodesIndicesMap.put(newNode.label, nodesNumber);
 		++nodesNumber;
 	}
 	
@@ -71,6 +70,9 @@ public class Graph {
 		edges.add(newEdge);
 		head.set(srcNodeIndex, edgesNumber);
 		++edgesNumber;
+		
+		newEdge.from = srcNodeIndex;
+		newEdge.to = destNodeIndex;
 	}
 	
 	
@@ -94,5 +96,58 @@ public class Graph {
 					destNodeName + " node is not found in the graph");
 		
 		addEdge(srcNodeIndex, destNodeIndex, newEdge);
+	}
+	
+	public List<GraphNode> getNodes(){
+		return nodes;
+	}
+	
+	public List<GraphEdge> getEdges(){
+		return edges;
+	}
+	
+	public GraphNode getNode(int nodeIndex){
+		return nodes.get(nodeIndex);
+	}
+	
+	/*
+	 * To be used only when the nodes have unique names.
+	 */
+	public GraphNode getNode(String nodeName){
+		if(!uniqueNodeNames)
+			throw new RuntimeException(
+					"Node names in the graph are not unique");		
+		
+		Integer nodeIndex = nodesIndicesMap.get(nodeName);
+		
+		if(nodeName == null)
+			throw new RuntimeException(
+					nodeName + " node is not found in the graph");
+		
+		return getNode(nodeIndex);
+	}
+	
+	public GraphEdge getEdge(int edgeIndex){
+		return edges.get(edgeIndex);
+	}
+	
+	public int getHead(int index){
+		return head.get(index);
+	}
+	
+	public int getNext(int index){
+		return next.get(index);
+	}
+	
+	public int getTo(int index){
+		return to.get(index);
+	}
+	
+	public int getNodesNumber(){
+		return nodesNumber;
+	}
+	
+	public int getEdgesNumber(){
+		return edgesNumber;
 	}
 }
