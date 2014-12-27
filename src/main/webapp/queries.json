@@ -2,7 +2,7 @@
     "queries": [
         {
             "desc": "I want to know the available runways in a specific airfield and their lengths",
-            "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#> select ?runway ?len where{ { ?airfield a uri:Airfield. ?runway a uri:Runway. ?airfield uri:AirfieldID ?id. ?runway uri:GroundSurfaceIsPartOf ?airfield. ?runway uri:Length ?len. filter ( ?id = '%s' ) } minus { ?airfield a uri:Airfield. ?runway a uri:Runway. ?airfield uri:AirfieldID ?id. ?runway uri:GroundSurfaceIsPartOf ?airfield. ?runway uri:LocationOf ?aircraft. filter ( ?id = '%s' ) } }",
+            "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#> select ?runway ?len where{ { ?airfield a uri:Airfield. ?runway a uri:Runway. ?airfield uri:AirfieldID ?id. ?runway uri:GroundSurfaceIsPartOf ?airfield. ?runway uri:Length ?len. filter ( ?id = '%s' ) } }",
             "paramters": [
                 {
                     "name": "Airfield ID",
@@ -12,7 +12,7 @@
         },
         {
             "desc": "I want to know to find out which taxiways are locked (identified from the maintenance status) from a certain runway",
-            "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#> SELECT ?aircraft ?aircraftCap ?gate ?gateCap where{ ?aircraft a uri:Aircraft. ?gate a uri:Gate. ?aircraft uri:AircraftID ?id. ?aircraft uri:IsLocatedIn ?location. ?aircraft uri:AircraftPassengerCapacity ?aircraftCap. ?gate uri:GatePassengerCapacity ?gateCap. ?gate uri:GateIsPartOf ?airfield. ?location uri:GroundSurfaceIsPartOf ?airfield. filter ( ?gateCap >= ?aircraftCap) filter ( ?id = '%s' ). } ORDER BY ASC(?gateCap) LIMIT 1 ",
+            "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#> SELECT ?runway ?taxiway where{ ?runway a uri:Runway. ?taxiway a uri:Taxiway. ?runway uri:GroundSurfaceName ?name. ?runway uri:HasExitTo ?taxiway. ?taxiway uri:MaintenanceStatus ?status. filter ( ?name = '%s' ). filter ( ?status = 'locked'). }",
             "paramters": [
                 {
                     "name": "Runway Name",
@@ -27,7 +27,7 @@
         },
         {
             "desc": "I want to know the best gate for the aircraft to land in.",
-            "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#> SELECT ?aircraft where { ?aircraft a uri:Aircraft. ?aircraft uri:AircraftID ?id. filter ( ?id = \"%s\").}",
+            "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#> SELECT ?aircraft ?aircraftCap ?gate ?gateCap where{ ?aircraft a uri:Aircraft. ?gate a uri:Gate. ?aircraft uri:AircraftID ?id. ?aircraft uri:IsLocatedIn ?location. ?aircraft uri:AircraftPassengerCapacity ?aircraftCap. ?gate uri:GatePassengerCapacity ?gateCap. ?gate uri:GateIsPartOf ?airfield. ?location uri:GroundSurfaceIsPartOf ?airfield. filter ( ?gateCap >= ?aircraftCap) filter ( ?id = '%s' ). } ORDER BY ASC(?gateCap) LIMIT 1 ",
             "paramters": [
                 {
                     "name": "Aircraft ID",

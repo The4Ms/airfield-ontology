@@ -129,7 +129,7 @@ public class OntologySchema {
 					individualsGraph.addNode(new GraphNode(destNodeName, "data"));
 				}
 				
-				individualsGraph.addEdge(name, propertyName, new GraphEdge(propertyName));
+				individualsGraph.addEdge(name, destNodeName, new GraphEdge(propertyName));
 			}
 		}
 		
