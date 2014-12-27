@@ -17,6 +17,7 @@ public class Graph {
 	Graph(){
 		nodesIndicesMap = new HashMap<String, Integer>();
 		nodes = new ArrayList<GraphNode>();
+		edges = new ArrayList<GraphEdge>();
 		head = new ArrayList<Integer>();
 		next = new ArrayList<Integer>();
 		to = new ArrayList<Integer>();
@@ -25,9 +26,10 @@ public class Graph {
 		uniqueNodeNames = true;
 	}
 	
-	Graph(List<GraphNode> nodes, List<Integer> head,
+	Graph(List<GraphNode> nodes, List<GraphEdge> edges, List<Integer> head,
 			List<Integer> next, List<Integer> to){
 		this.nodes = nodes;
+		this.edges = edges;
 		this.head = head;
 		this.next = next;
 		this.to = to;
@@ -159,7 +161,7 @@ public class Graph {
 	}
 	
 	public VisJsGraphNode[] toVisJsGraphNodes(){
-		String shapes[] = {"ellipse", "box", "circle", "square",
+		String shapes[] = {"ellipse", "square", "circle", "box",
 							"triangle", "triangleDown", "star"};
 		HashMap<String, String> usedShapes = new HashMap<String, String>();
 		int nextShapeIndex = 0;

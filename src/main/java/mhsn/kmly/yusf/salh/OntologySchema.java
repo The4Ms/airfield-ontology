@@ -23,7 +23,7 @@ public class OntologySchema {
 		dataProperties = null;
 	}
 	
-	OntologySchema(OntModel _ontModel){
+	public OntologySchema(OntModel _ontModel){
 		this.setModel(_ontModel);
 	}
 	
