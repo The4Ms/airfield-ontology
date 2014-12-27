@@ -36,9 +36,10 @@
 				<div class="alert alert-info">
 
 					<form name="customQuery" class="form-group">
-						<div class="form-group">
-							<label>Select a prepared query (the real query will appear below):</label> <select class="form-control"
-								data-bind="options: queries, optionsText: 'desc', value: query">
+						<div class="form-group" data-bind="with: queries">
+							<label>Select a prepared query (the real query will
+								appear below):</label> <select class="form-control"
+								data-bind="options: queries, optionsText: 'desc', value: $root.query">
 							</select>
 						</div>
 
@@ -59,10 +60,11 @@
 
 				<div class="alert alert-info">
 					<form name="queryForm" class="form-group">
-					
+
 						<label>Or write custom query:</label>
 						<div class="form-group">
-							<textarea id="query" name="query" class="form-control" rows="18" cols="80">
+							<textarea id="query" name="query" class="form-control" rows="18"
+								cols="80">
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -105,6 +107,17 @@ PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOn
 			$.post('sparql', {
 				'query' : query
 			}).success(function(response) {
+				if (response === false || response === true) {
+					response = {
+						'head' : {
+							'vars' : [ response ]
+						},
+						'results' : {
+							'binding':[]
+						}
+					}
+				}
+
 				MyModel.queryResult(response);
 
 				$('#QueryResultPanel').fadeIn('fast', function() {
@@ -122,43 +135,29 @@ PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOn
 		});
 	}
 
-	var queries = [
-			{
-				'desc' : 'I want to get aircraft by ID',
-				'query' : 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#> SELECT ?aircraft where { ?aircraft a uri:Aircraft. ?aircraft uri:AircraftID ?id. filter ( ?id = "%s").}',
-				'paramters' : [ {
-					'name' : 'Aircraft Id',
-					'type' : 'string'
-				} ]
-			},
-			{
-				'desc' : 'I want to get air craft by ID  sdsadassad',
-				'query' : 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#> SELECT ?aircraft where { ?aircraft a uri:Aircraft. ?aircraft uri:AircraftID ?id. filter ( ?id = "%s").}',
-				'paramters' : [ {
-					'name' : 'air craft id',
-					'type' : 'string'
-				} ]
-			} ];
-
-	var query;
-
 	var MyModel = {
 		queryResult : ko.observable(),
 
 		query : ko.observable(),
-		queries : ko.observable(queries),
+		queries : ko.observable(),
 		excuteCustomQuery : function(data, event) {
 			params = [];
 			$('.isParam').each(function() {
 				params.push(this.value);
 			});
-		
+
 			var realQuery = sprintf(data.query, params);
 
 			$('#query').html(realQuery);
 			excuteMyQuery(realQuery);
 		}
 	};
+
+	$.get('queries.json').success(function(data) {
+		MyModel.queries(data);
+	}).fail(function() {
+		alert('Error getting the queries');
+	});
 
 	function excuteQuery() {
 		excuteMyQuery(queryForm.query.value);

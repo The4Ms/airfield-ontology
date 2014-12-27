@@ -1,0 +1,49 @@
+{
+    "queries": [
+        {
+            "desc": "I want to know the available runways in a specific airfield and their lengths",
+            "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#> select ?runway ?len where{ { ?airfield a uri:Airfield. ?runway a uri:Runway. ?airfield uri:AirfieldID ?id. ?runway uri:GroundSurfaceIsPartOf ?airfield. ?runway uri:Length ?len. filter ( ?id = '%s' ) } minus { ?airfield a uri:Airfield. ?runway a uri:Runway. ?airfield uri:AirfieldID ?id. ?runway uri:GroundSurfaceIsPartOf ?airfield. ?runway uri:LocationOf ?aircraft. filter ( ?id = '%s' ) } }",
+            "paramters": [
+                {
+                    "name": "Airfield ID",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "desc": "I want to know to find out which taxiways are locked (identified from the maintenance status) from a certain runway",
+            "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#> SELECT ?aircraft ?aircraftCap ?gate ?gateCap where{ ?aircraft a uri:Aircraft. ?gate a uri:Gate. ?aircraft uri:AircraftID ?id. ?aircraft uri:IsLocatedIn ?location. ?aircraft uri:AircraftPassengerCapacity ?aircraftCap. ?gate uri:GatePassengerCapacity ?gateCap. ?gate uri:GateIsPartOf ?airfield. ?location uri:GroundSurfaceIsPartOf ?airfield. filter ( ?gateCap >= ?aircraftCap) filter ( ?id = '%s' ). } ORDER BY ASC(?gateCap) LIMIT 1 ",
+            "paramters": [
+                {
+                    "name": "Runway Name",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "desc": "I want to know which runway or taxiway has 2 aircrafts at the same time",
+            "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#> SELECT DISTINCT ?location where{ ?aircraft1 a uri:Aircraft. ?aircraft2 a uri:Aircraft. ?aircraft1 uri:IsLocatedIn ?location. ?aircraft2 uri:IsLocatedIn ?location. filter ( ?aircraft1 != ?aircraft2 ). } ",
+            "paramters": []
+        },
+        {
+            "desc": "I want to know the best gate for the aircraft to land in.",
+            "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#> SELECT ?aircraft where { ?aircraft a uri:Aircraft. ?aircraft uri:AircraftID ?id. filter ( ?id = \"%s\").}",
+            "paramters": [
+                {
+                    "name": "Aircraft ID",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "desc": "I want to verify if there are any aircrafts at a given runway ",
+            "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#> ASK where{ ?runway a uri:Runway. ?runway uri:GroundSurfaceName ?name. ?runway uri:LocationOf ?aircraft. filter ( ?name = '%s'). }",
+            "paramters": [
+                {
+                    "name": "Runway Name",
+                    "type": "string"
+                }
+            ]
+        }
+    ]
+}
