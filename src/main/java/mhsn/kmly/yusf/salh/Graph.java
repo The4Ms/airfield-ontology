@@ -150,4 +150,53 @@ public class Graph {
 	public int getEdgesNumber(){
 		return edgesNumber;
 	}
+	
+	public VisJsGraph toVisJsGraph(){
+		VisJsGraph visJsGraph = new VisJsGraph();
+		visJsGraph.nodes = this.toVisJsGraphNodes();
+		visJsGraph.edges = this.toVisJsGraphEdges();
+		return visJsGraph;
+	}
+	
+	public VisJsGraphNode[] toVisJsGraphNodes(){
+		String shapes[] = {"ellipse", "box", "circle", "square",
+							"triangle", "triangleDown", "star"};
+		HashMap<String, String> usedShapes = new HashMap<String, String>();
+		int nextShapeIndex = 0;
+		
+		VisJsGraphNode visJsNodes[] = new VisJsGraphNode[nodes.size()];
+		for(int i=0;i<nodes.size();++i){
+			GraphNode node = nodes.get(i);
+			VisJsGraphNode tempVisJsNode = new VisJsGraphNode();
+			String shape = usedShapes.get(node.type);
+			if(shape == null){
+				shape = shapes[nextShapeIndex];
+				usedShapes.put(node.type, shape);
+				nextShapeIndex = ((nextShapeIndex+1)%7);
+			}
+			
+			tempVisJsNode.id = i;
+			tempVisJsNode.label = node.label;
+			tempVisJsNode.shape = shape;
+			tempVisJsNode.group = "main";
+			visJsNodes[i] = tempVisJsNode;
+		}
+		
+		return visJsNodes;
+	}
+	
+	public VisJsGraphEdge[] toVisJsGraphEdges(){
+		VisJsGraphEdge visJsEdges[] = new VisJsGraphEdge[edges.size()];
+		for(int i=0;i<edges.size();++i){
+			GraphEdge edge = edges.get(i);
+			VisJsGraphEdge tempVisJsEdge = new VisJsGraphEdge();
+			tempVisJsEdge.from = edge.from;
+			tempVisJsEdge.to = edge.to;
+			tempVisJsEdge.label = edge.label;
+			tempVisJsEdge.style = "arrow";
+			visJsEdges[i] = tempVisJsEdge;
+		}
+		
+		return visJsEdges;
+	}
 }
