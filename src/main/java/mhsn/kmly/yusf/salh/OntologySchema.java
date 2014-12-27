@@ -106,6 +106,7 @@ public class OntologySchema {
 			throw new NullPointerException(
 					"the ontology model has not been initialized");
 		
-		return null;
+		throw new UnsupportedOperationException(
+				"Individuals Graph is not yet supported");
 	}
 }
