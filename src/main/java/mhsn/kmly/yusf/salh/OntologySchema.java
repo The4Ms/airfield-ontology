@@ -7,6 +7,7 @@ import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.ontology.ObjectProperty;
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
+import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 
 public class OntologySchema {
@@ -106,7 +107,32 @@ public class OntologySchema {
 			throw new NullPointerException(
 					"the ontology model has not been initialized");
 		
-		throw new UnsupportedOperationException(
-				"Individuals Graph is not yet supported");
+		Graph individualsGraph = new Graph();
+		for(String name : individuals.keySet())
+			individualsGraph.addNode(new GraphNode(name, "individual"));
+		
+		for(String name : individuals.keySet()){
+			Individual subject = individuals.get(name);
+			ExtendedIterator<Statement> propertiesIterator = subject.listProperties();
+			while(propertiesIterator.hasNext()){
+				Statement property = propertiesIterator.next();
+				String propertyName = property.getPredicate().getLocalName();
+				String destNodeName = "";
+				
+				if(propertyName.equals("type"))
+					continue;
+				
+				if(objectProperties.containsKey(propertyName))
+					destNodeName = property.getObject().asResource().getLocalName();
+				else{
+					destNodeName = property.getObject().asLiteral().getValue().toString();
+					individualsGraph.addNode(new GraphNode(destNodeName, "data"));
+				}
+				
+				individualsGraph.addEdge(name, propertyName, new GraphEdge(propertyName));
+			}
+		}
+		
+		return individualsGraph;
 	}
 }
