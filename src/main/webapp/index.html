@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="main.css">
 <script src="knockout-3.2.0.js"></script>
 <script src="jquery-2.1.3.min.js"></script>
+<script src="sprintf.min.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -32,6 +33,24 @@
 		</nav>
 		<div class="starter-template">
 			<div class="row">
+				<div class="alert alert-info">
+
+					<form name="customQuery" class="form-group" data-bind="with: query">
+						<label data-bind="text: desc"></label>
+
+						<div data-bind="foreach: paramters">
+							<div class="form-group">
+								<input class="form-control isParam"
+									data-bind="textInput: name" />
+							</div>
+						</div>
+
+						<button id="queryButton" class="btn btn-primary pull-right"
+							data-bind="click: $root.excuteCustomQuery" type="button">Query</button>
+						<div class="clearfix"></div>
+					</form>
+				</div>
+
 				<form name="queryForm" class="form-group">
 					<div class="form-group">
 						<textarea name="query" class="form-control" rows="18" cols="80">
@@ -43,8 +62,8 @@ PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOn
 							</textarea>
 					</div>
 
-					<button id="queryButton" class="btn btn-primary pull-right" onclick="excuteQuery()"
-						type="button">Query</button>
+					<button id="queryButton" class="btn btn-primary pull-right"
+						onclick="excuteQuery()" type="button">Query</button>
 					<div class="clearfix"></div>
 				</form>
 
@@ -69,14 +88,8 @@ PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOn
 </body>
 
 <script type="text/javascript">
-	var MyModel = {
-		queryResult : ko.observable()
-	};
-	
-	
-	function excuteQuery() {
+	function excuteMyQuery(query) {
 		$('#QueryResultPanel').fadeOut('fast', function() {
-			var query = queryForm.query.value;
 			$("#queryButton").prop('disabled', true);
 
 			$.post('sparql', {
@@ -85,7 +98,6 @@ PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOn
 				MyModel.queryResult(response);
 
 				$('#QueryResultPanel').fadeIn('fast', function() {
-
 					$('html, body').animate({
 						scrollTop : $("#QueryResultPanel").offset().top
 					}, 1000);
@@ -97,7 +109,35 @@ PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOn
 				MyModel.queryResult(undefined);
 				$("#queryButton").prop('disabled', false);
 			});
-		})
+		});
+	}
+
+	var query = {
+		'desc' : 'I want to get air craft by ID',
+		'query' : 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#> SELECT ?aircraft where { ?aircraft a uri:Aircraft. ?aircraft uri:AircraftID ?id. filter ( ?id = "%s").}',
+		'paramters' : [ {
+			'name' : 'air craft id',
+			'type' : 'string'
+		} ]
+	}
+
+	var MyModel = {
+		query : ko.observable(query),
+		queryResult : ko.observable(),
+		excuteCustomQuery : function(data, event) {
+			params = [];
+			$('.isParam').each(function(){
+				params.push(this.value);
+			});
+
+			console.log(params);
+			
+			excuteMyQuery(sprintf(data.query, params));
+		}
+	};
+
+	function excuteQuery() {
+		excuteMyQuery(queryForm.query.value);
 	}
 
 	ko.applyBindings(MyModel);
