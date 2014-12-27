@@ -96,7 +96,7 @@ public class OntologySchema {
 		for(String name : dataProperties.keySet()){
 			DatatypeProperty dataProperty = dataProperties.get(name);
 			String srcClassName = dataProperty.getDomain().getLocalName();
-			schemaGraph.addEdge(srcClassName, name, new GraphEdge("has"));
+			schemaGraph.addEdge(srcClassName, name, new GraphEdge(""));
 		}
 		
 		return schemaGraph;
@@ -112,25 +112,43 @@ public class OntologySchema {
 			individualsGraph.addUniqueNode(new GraphNode(name, "individual"));
 		
 		for(String name : individuals.keySet()){
-			Individual subject = individuals.get(name);
-			ExtendedIterator<Statement> propertiesIterator = subject.listProperties();
+			Individual individual = individuals.get(name);
+			ExtendedIterator<Statement> propertiesIterator = individual.listProperties();
 			while(propertiesIterator.hasNext()){
 				Statement property = propertiesIterator.next();
 				String propertyName = property.getPredicate().getLocalName();
-				String destNodeName = "";
 				
 				if(propertyName.equals("type"))
 					continue;
 				
-				if(objectProperties.containsKey(propertyName))
-					destNodeName = property.getObject().asResource().getLocalName();
-				else{
-					destNodeName = property.getObject().asLiteral().getValue().toString();
-					individualsGraph.addUniqueNode(new GraphNode(destNodeName, "data"));
+				if(objectProperties.containsKey(propertyName)){
+					String destNodeName = property.getObject().asResource().getLocalName();
+					individualsGraph.addEdge(name, destNodeName, new GraphEdge(propertyName));
 				}
-				
-				individualsGraph.addEdge(name, propertyName, new GraphEdge(propertyName));
 			}
+		}
+		
+		int individualIndex = 0;
+		for(String name : individuals.keySet()){
+			Individual individual = individuals.get(name);
+			ExtendedIterator<Statement> propertiesIterator = individual.listProperties();
+			while(propertiesIterator.hasNext()){
+				Statement property = propertiesIterator.next();
+				String propertyName = property.getPredicate().getLocalName();
+				
+				if(propertyName.equals("type"))
+					continue;
+				
+				if(dataProperties.containsKey(propertyName)){
+					String destNodeName = property.getObject().asLiteral().getValue().toString();
+					individualsGraph.addNode(new GraphNode(destNodeName, "data"));
+					individualsGraph.addEdge(individualIndex, 
+							individualsGraph.getNodesNumber()-1, 
+							new GraphEdge(propertyName));
+				}
+			}
+			
+			++individualIndex;
 		}
 		
 		return individualsGraph;
