@@ -19,7 +19,7 @@ import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.shared.Lock;
 import com.hp.hpl.jena.sparql.resultset.JSONOutput;
 
-@WebServlet(displayName = "IndividController", urlPatterns = { "/individ" })
+@WebServlet(displayName = "IndividController", urlPatterns = { "/individuals" })
 public class IndividController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
