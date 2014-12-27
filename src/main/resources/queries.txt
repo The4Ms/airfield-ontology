@@ -1,0 +1,61 @@
+select ?runway ?len where{
+	{
+		?airfield a uri:Airfield.
+		?runway a uri:Runway.
+		?airfield uri:AirfieldID ?id.
+		?runway uri:GroundSurfaceIsPartOf ?airfield.
+		?runway uri:Length ?len.
+		filter ( ?id = <INPUT> )
+	}
+	minus
+	{
+		?airfield a uri:Airfield.
+		?runway a uri:Runway.
+		?airfield uri:AirfieldID ?id.
+		?runway uri:GroundSurfaceIsPartOf ?airfield.
+		?runway uri:LocationOf ?aircraft.
+		filter ( ?id = <INPUT> )
+	}
+}
+
+SELECT ?runway ?taxiway where{
+	?runway a uri:Runway.
+	?taxiway a uri:Taxiway.
+	?runway uri:GroundSurfaceName ?name.
+	?runway uri:HasExitTo ?taxiway.
+	?taxiway uri:MaintenanceStatus ?status.
+	filter ( ?name = <INPUT> ).
+	filter ( ?status = "locked").
+}
+
+SELECT DISTINCT ?location where{
+	?aircraft1 a uri:Aircraft.
+	?aircraft2 a uri:Aircraft.
+	?aircraft1 uri:IsLocatedIn ?location.
+	?aircraft2 uri:IsLocatedIn ?location.
+	filter ( ?aircraft1 != ?aircraft2 ).
+}
+
+SELECT ?aircraft ?aircraftCap ?gate ?gateCap where{
+	?aircraft a uri:Aircraft.
+	?gate a uri:Gate.
+	?aircraft uri:AircraftID ?id.
+	?aircraft uri:IsLocatedIn ?location.
+	?aircraft uri:AircraftPassengerCapacity ?aircraftCap.
+	
+	?gate uri:GatePassengerCapacity ?gateCap.
+	?gate uri:GateIsPartOf ?airfield.
+	
+	?location uri:GroundSurfaceIsPartOf ?airfield.
+	filter ( ?gateCap >= ?aircraftCap)
+	filter ( ?id = <INPUT> ).
+}
+ORDER BY ASC(?gateCap)
+LIMIT 1
+
+ASK where{
+	?runway a uri:Runway.
+	?runway uri:GroundSurfaceName ?name.
+	?runway uri:LocationOf ?aircraft.
+	filter ( ?name = <INPUT>).
+}

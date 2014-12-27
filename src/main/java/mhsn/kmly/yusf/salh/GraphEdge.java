@@ -1,13 +1,15 @@
 package mhsn.kmly.yusf.salh;
 
 public class GraphEdge {
-	public String name;
+	public String label;
+	public int from;
+	public int to;
 	
 	GraphEdge(){
-		name = "";
+		label = "";
 	}
 	
-	GraphEdge(String name){
-		this.name = name;
+	GraphEdge(String label){
+		this.label = label;
 	}
 }
