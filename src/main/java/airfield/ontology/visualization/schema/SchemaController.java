@@ -22,8 +22,8 @@ import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.shared.Lock;
 import com.hp.hpl.jena.sparql.resultset.JSONOutput;
 
-@WebServlet(displayName = "OntologyController", urlPatterns = { "/ontology" })
-public class OntologyController extends HttpServlet {
+@WebServlet(displayName = "OntologyController", urlPatterns = { "/schema" })
+public class SchemaController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -34,12 +34,8 @@ public class OntologyController extends HttpServlet {
 		OntologySchema sc = new OntologySchema(ModelProvider.MODEL);
 		VisJsGraph g =  sc.buildSchemaGraph().toVisJsGraph();
 		
-		// Convert the java object into a JSON object here
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonObj = mapper.writeValueAsString(g);
-		
-		// Returning a normal graph so that you can see it
-		//jsonObj = "{\"nodes\":[{\"id\":1,\"label\":\"circle\",\"shape\":\"circle\",\"group\":\"group_x\"},{\"id\":2,\"label\":\"ellipse\",\"shape\":\"ellipse\",\"group\":\"group_x\"},{\"id\":3,\"label\":\"database\",\"shape\":\"database\",\"group\":\"group_x\"},{\"id\":4,\"label\":\"box\",\"shape\":\"box\",\"group\":\"group_x\"}],\"edges\":[{\"from\":3,\"to\":1,\"style\":\"arrow\"},{\"from\":1,\"to\":4,\"style\":\"dash-line\"},{\"from\":1,\"to\":2,\"style\":\"arrow-center\"}]}";
 
 		response.setContentType("application/json");
 		PrintWriter writer = response.getWriter();
