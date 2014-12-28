@@ -2,7 +2,7 @@
     "queries": [
         {
             "desc": "I want to know the available runways in a specific airfield and their lengths",
-            "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#> select ?runway ?len where{ { ?airfield a uri:Airfield. ?runway a uri:Runway. ?airfield uri:AirfieldID ?id. ?runway uri:GroundSurfaceIsPartOf ?airfield. ?runway uri:Length ?len. filter ( ?id = '%s' ) } }",
+            "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n PREFIX owl: <http://www.w3.org/2002/07/owl#> \n PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \n PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#> \n\n SELECT ?runway ?len \n where{ ?airfield a uri:Airfield. \n ?runway a uri:Runway. \n ?airfield uri:AirfieldID ?id. \n ?runway uri:GroundSurfaceIsPartOf ?airfield. \n ?runway uri:Length ?len. \n filter ( ?id = '%s' ). \n }",
             "paramters": [
                 {
                     "name": "Airfield ID",
@@ -12,7 +12,7 @@
         },
         {
             "desc": "I want to know to find out which taxiways are locked (identified from the maintenance status) from a certain runway",
-            "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#> SELECT ?runway ?taxiway where{ ?runway a uri:Runway. ?taxiway a uri:Taxiway. ?runway uri:GroundSurfaceName ?name. ?runway uri:HasExitTo ?taxiway. ?taxiway uri:MaintenanceStatus ?status. filter ( ?name = '%s' ). filter ( ?status = 'locked'). }",
+            "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n PREFIX owl: <http://www.w3.org/2002/07/owl#> \n PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \n PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#> \n\n SELECT ?runway ?taxiway \n where{ \n ?runway a uri:Runway. \n ?taxiway a uri:Taxiway. \n ?runway uri:GroundSurfaceName ?name. \n ?runway uri:HasExitTo ?taxiway. \n ?taxiway uri:MaintenanceStatus ?status. \n filter ( ?name = '%s' ). \n filter ( ?status = 'locked'). \n }",
             "paramters": [
                 {
                     "name": "Runway Name",
@@ -22,12 +22,12 @@
         },
         {
             "desc": "I want to know which runway or taxiway has 2 aircrafts at the same time",
-            "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#> SELECT DISTINCT ?location where{ ?aircraft1 a uri:Aircraft. ?aircraft2 a uri:Aircraft. ?aircraft1 uri:IsLocatedIn ?location. ?aircraft2 uri:IsLocatedIn ?location. filter ( ?aircraft1 != ?aircraft2 ). } ",
+            "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n PREFIX owl: <http://www.w3.org/2002/07/owl#> \n PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \n PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#> \n\n SELECT DISTINCT ?location \n where{ \n ?aircraft1 a uri:Aircraft. \n ?aircraft2 a uri:Aircraft. \n ?aircraft1 uri:IsLocatedIn ?location. \n ?aircraft2 uri:IsLocatedIn ?location. \n filter ( ?aircraft1 != ?aircraft2 ). \n } ",
             "paramters": []
         },
         {
             "desc": "I want to know the best gate for the aircraft to land in.",
-            "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#> SELECT ?aircraft ?aircraftCap ?gate ?gateCap where{ ?aircraft a uri:Aircraft. ?gate a uri:Gate. ?aircraft uri:AircraftID ?id. ?aircraft uri:IsLocatedIn ?location. ?aircraft uri:AircraftPassengerCapacity ?aircraftCap. ?gate uri:GatePassengerCapacity ?gateCap. ?gate uri:GateIsPartOf ?airfield. ?location uri:GroundSurfaceIsPartOf ?airfield. filter ( ?gateCap >= ?aircraftCap) filter ( ?id = '%s' ). } ORDER BY ASC(?gateCap) LIMIT 1 ",
+            "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n PREFIX owl: <http://www.w3.org/2002/07/owl#> \n PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \n PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#> \n\n SELECT ?aircraft ?aircraftCap ?gate ?gateCap \n where{\n ?aircraft a uri:Aircraft. \n ?gate a uri:Gate. ?aircraft uri:AircraftID ?id. \n ?aircraft uri:IsLocatedIn ?location. \n ?aircraft uri:AircraftPassengerCapacity ?aircraftCap. \n ?gate uri:GatePassengerCapacity ?gateCap. \n ?gate uri:GateIsPartOf ?airfield. \n ?location uri:GroundSurfaceIsPartOf ?airfield. \n filter ( ?gateCap >= ?aircraftCap)  \n filter ( ?id = '%s' ). \n } \n ORDER BY ASC(?gateCap) \n LIMIT 1 ",
             "paramters": [
                 {
                     "name": "Aircraft ID",
@@ -37,7 +37,7 @@
         },
         {
             "desc": "I want to verify if there are any aircrafts at a given runway ",
-            "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#> ASK where{ ?runway a uri:Runway. ?runway uri:GroundSurfaceName ?name. ?runway uri:LocationOf ?aircraft. filter ( ?name = '%s'). }",
+            "query": "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n PREFIX owl: <http://www.w3.org/2002/07/owl#> \n PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \n PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#> \n\n ASK \n where{ \n ?runway a uri:Runway. \n ?runway uri:GroundSurfaceName ?name. \n ?runway uri:LocationOf ?aircraft. \n filter ( ?name = '%s'). \n }",
             "paramters": [
                 {
                     "name": "Runway Name",
