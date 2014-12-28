@@ -18,7 +18,8 @@ public class ShowOntologyController extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		ModelProvider.MODEL.write(response.getOutputStream());
+		response.setContentType("text/turtle");
+		ModelProvider.MODEL.write(response.getOutputStream(), "TURTLE");
 		response.getOutputStream().flush();
 	}
 }
