@@ -2,8 +2,6 @@ package airfield.ontology.visualization.schema;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.Serializable;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,13 +12,6 @@ import airfield.ontology.ModelProvider;
 import airfield.ontology.utils.VisJsGraph;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hp.hpl.jena.ontology.OntModel;
-import com.hp.hpl.jena.query.QueryExecution;
-import com.hp.hpl.jena.query.QueryExecutionFactory;
-import com.hp.hpl.jena.query.QueryParseException;
-import com.hp.hpl.jena.query.ResultSet;
-import com.hp.hpl.jena.shared.Lock;
-import com.hp.hpl.jena.sparql.resultset.JSONOutput;
 
 @WebServlet(displayName = "OntologyController", urlPatterns = { "/schema" })
 public class SchemaController extends HttpServlet {
