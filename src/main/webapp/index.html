@@ -24,13 +24,15 @@
 				</div>
 				<div id="navbar" class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
-						<li class="dropdown">
-				          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Visualization<span class="caret"></span></a>
-				          <ul class="dropdown-menu" role="menu">
-							<li><a target="_blank" href="visualize.html?graphUrl=schema">Schema</a></li>
-							<li><a target="_blank" href="visualize.html?graphUrl=individuals">Individuals</a></li>
-				          </ul>
-				        </li>
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-expanded="false">Visualization<span
+								class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a target="_blank"
+									href="visualize.html?graphUrl=schema">Schema</a></li>
+								<li><a target="_blank"
+									href="visualize.html?graphUrl=individuals">Individuals</a></li>
+							</ul></li>
 
 						<li><a target="_blank" href="ontologyFile">OWL File</a></li>
 
@@ -61,7 +63,8 @@
 						onsubmit="return false;">
 						<div class="form-group" data-bind="with: queries">
 							<label>Select a prepared query (the real query will
-								appear below when you click query):</label> <select class="form-control"
+								appear in the custom query textbox when you click query):</label> <select
+								class="form-control"
 								data-bind="options: queries, optionsText: 'desc', value: $root.query">
 							</select>
 						</div>
@@ -82,11 +85,15 @@
 				</div>
 
 				<div class="alert alert-info">
-					<form name="queryForm" class="form-group">
+					<label> <input type='checkbox'
+						data-bind='checked: displayCustomQuery' /> Or write custom query:
+					</label>
 
-						<label>Or write custom query:</label>
+					<form name="queryForm" class="form-group"
+						data-bind="fadeVisible: displayCustomQuery">
+						
 						<div class="form-group">
-							<textarea id="query" name="query" class="form-control" rows="18"
+							<textarea id="query" name="query" class="form-control" rows="12"
 								cols="80">
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
@@ -183,6 +190,7 @@ PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOn
 	}
 
 	var MyModel = {
+		displayCustomQuery : ko.observable(),
 		queryResult : ko.observable(),
 
 		query : ko.observable(),
@@ -197,6 +205,19 @@ PREFIX uri: <http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOn
 
 			$('#query').html(realQuery);
 			excuteMyQuery(realQuery);
+		}
+	};
+
+	ko.bindingHandlers.fadeVisible = {
+		init : function(element, valueAccessor) {
+			// Initially set the element to be instantly visible/hidden depending on the value
+			var value = valueAccessor();
+			$(element).toggle(ko.unwrap(value)); // Use "unwrapObservable" so we can handle values that may or may not be observable
+		},
+		update : function(element, valueAccessor) {
+			// Whenever the value subsequently changes, slowly fade the element in or out
+			var value = valueAccessor();
+			ko.unwrap(value) ? $(element).fadeIn() : $(element).fadeOut();
 		}
 	};
 
