@@ -80,7 +80,7 @@
 		})();
 		
 		rdfstore.create(function(store) {
-			store.load('remote', "http://localhost:8080/airfield-ontology/ontologyFile", "komalo", function(success, results) {
+			store.load('remote', "ontologyFile", "komalo", function(success, results) {
 				//store.setPrefix('uri','http://www.semanticweb.org/eng.mahmoud/ontologies/2014/11/AirportOntology#');
 
 				store.graph("komalo", function(success, graph) {
